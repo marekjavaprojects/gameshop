@@ -15,7 +15,7 @@ import com.gameshop.entity.Product;
 import com.gameshop.service.ProductService;
 
 @Controller
-@RequestMapping("products/")
+@RequestMapping("/products")
 public class ProductController {
 	
 	private String productListLabel;
