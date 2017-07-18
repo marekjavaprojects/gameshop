@@ -6,7 +6,6 @@ import java.util.Set;
 import com.gameshop.entity.Product;
 
 public interface ProductService {
-
 	public List<Product> getProducts();
 
 	public Product getProductById(int productId);

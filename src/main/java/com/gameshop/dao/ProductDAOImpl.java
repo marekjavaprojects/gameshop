@@ -15,11 +15,11 @@ public class ProductDAOImpl implements ProductDAO {
 
 	@Autowired
 	private SessionFactory sessionFactory;
-
+	private Session currentSession;
 	@Override
 	public List<Product> getProducts() {
 
-		Session currentSession = sessionFactory.getCurrentSession();
+		currentSession = sessionFactory.getCurrentSession();
 
 		// create a query .. sort by last name
 		Query<Product> query = currentSession.createQuery("from Product", Product.class);
@@ -32,7 +32,7 @@ public class ProductDAOImpl implements ProductDAO {
 	@Override
 	public List<Product> getFourLatestProducts() {
 
-		Session currentSession = sessionFactory.getCurrentSession();
+		currentSession = sessionFactory.getCurrentSession();
 
 		// create a query .. sort by last name
 		Query<Product> queryForLatestFourProducts = currentSession.createQuery("from Product order by dateAdded", Product.class);
@@ -46,7 +46,7 @@ public class ProductDAOImpl implements ProductDAO {
 	@Override
 	public Product getProductById(int productId) {
 
-		Session currentSession = sessionFactory.getCurrentSession();
+		currentSession = sessionFactory.getCurrentSession();
 
 		Product product = currentSession.get(Product.class, productId);
 
@@ -56,7 +56,7 @@ public class ProductDAOImpl implements ProductDAO {
 	@Override
 	public List<Product> getProductsByCategory(String category) {
 
-		Session currentSession = sessionFactory.getCurrentSession();
+		currentSession = sessionFactory.getCurrentSession();
 		String hql = "from Product where category=:category";
 		Query<Product> queryForProductsByCategory = currentSession.createQuery(hql, Product.class);
 		queryForProductsByCategory.setParameter("category",category);
@@ -69,7 +69,7 @@ public class ProductDAOImpl implements ProductDAO {
 	@Override
 	public List<Product> searchProductsByName(String productName) {
 		
-		Session currentSession = sessionFactory.getCurrentSession();
+		currentSession = sessionFactory.getCurrentSession();
 		String hql = "from Product where productName like :productName ";
 		Query<Product> queryForProductsSearchedByProductName = currentSession.createQuery(hql, Product.class);
 		queryForProductsSearchedByProductName.setParameter("productName", productName + "%");
