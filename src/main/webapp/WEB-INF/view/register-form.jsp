@@ -1,121 +1,87 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
-<%@ page isELIgnored="false" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<html>
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Login page</title>
-<link
-	href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css"
-	rel="stylesheet">
-<link href="${pageContext.request.contextPath}'/static/css/app.css' />"
-	rel="stylesheet"></link>
-<link rel="stylesheet" type="text/css"
-	href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.css" />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Create an account</title>
+
+    <link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/resources/css/common.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
 </head>
 
 <body>
-    <div class="generic-container">
-        <%@include file="authheader.jsp" %>
- 
-        <div class="well lead">User Registration Form</div>
-        <form:form method="POST" modelAttribute="user" class="form-horizontal">
-            <form:input type="hidden" path="id" id="id"/>
-             
-            <div class="row">
-                <div class="form-group col-md-12">
-                    <label class="col-md-3 control-lable" for="firstName">First Name</label>
-                    <div class="col-md-7">
-                        <form:input type="text" path="firstName" id="firstName" class="form-control input-sm"/>
-                        <div class="has-error">
-                            <form:errors path="firstName" class="help-inline"/>
-                        </div>
-                    </div>
-                </div>
+
+<div class="container">
+
+    <form:form method="POST" modelAttribute="user" class="form-signin" action="${pageContext.request.contextPath}/register/processForm">
+        <h2 class="form-signin-heading">Create your account</h2>
+        <spring:bind path="firstName">
+            <div class="form-group ${status.error ? 'has-error' : ''}">
+                <form:input type="text" path="firstName" class="form-control" placeholder="Username"
+                            autofocus="true"></form:input>
+                <form:errors path="firstName"></form:errors>
             </div>
-     
-            <div class="row">
-                <div class="form-group col-md-12">
-                    <label class="col-md-3 control-lable" for="lastName">Last Name</label>
-                    <div class="col-md-7">
-                        <form:input type="text" path="lastName" id="lastName" class="form-control input-sm" />
-                        <div class="has-error">
-                            <form:errors path="lastName" class="help-inline"/>
-                        </div>
-                    </div>
-                </div>
+        </spring:bind>
+
+        <spring:bind path="lastName">
+            <div class="form-group ${status.error ? 'has-error' : ''}">
+                <form:input type="text" path="lastName" class="form-control" placeholder="LastName"></form:input>
+                <form:errors path="lastName"></form:errors>
             </div>
-     
-            <div class="row">
-                <div class="form-group col-md-12">
-                    <label class="col-md-3 control-lable" for="ssoId">SSO ID</label>
-                    <div class="col-md-7">
-                        <c:choose>
-                            <c:when test="${edit}">
-                                <form:input type="text" path="ssoId" id="ssoId" class="form-control input-sm" disabled="true"/>
-                            </c:when>
-                            <c:otherwise>
-                                <form:input type="text" path="ssoId" id="ssoId" class="form-control input-sm" />
-                                <div class="has-error">
-                                    <form:errors path="ssoId" class="help-inline"/>
-                                </div>
-                            </c:otherwise>
-                        </c:choose>
-                    </div>
-                </div>
+        </spring:bind>
+        
+        <spring:bind path="login">
+            <div class="form-group ${status.error ? 'has-error' : ''}">
+                <form:input type="text" path="login" class="form-control" placeholder="Login"></form:input>
+                <form:errors path="login"></form:errors>
             </div>
-     
-            <div class="row">
-                <div class="form-group col-md-12">
-                    <label class="col-md-3 control-lable" for="password">Password</label>
-                    <div class="col-md-7">
-                        <form:input type="password" path="password" id="password" class="form-control input-sm" />
-                        <div class="has-error">
-                            <form:errors path="password" class="help-inline"/>
-                        </div>
-                    </div>
-                </div>
+        </spring:bind>
+        
+        <spring:bind path="password">
+            <div class="form-group ${status.error ? 'has-error' : ''}">
+                <form:input type="password" path="password" class="form-control" placeholder="Password"></form:input>
+                <form:errors path="password"></form:errors>
             </div>
-     
-            <div class="row">
-                <div class="form-group col-md-12">
-                    <label class="col-md-3 control-lable" for="email">Email</label>
-                    <div class="col-md-7">
-                        <form:input type="text" path="email" id="email" class="form-control input-sm" />
-                        <div class="has-error">
-                            <form:errors path="email" class="help-inline"/>
-                        </div>
-                    </div>
-                </div>
+        </spring:bind>
+        
+        <spring:bind path="email">
+            <div class="form-group ${status.error ? 'has-error' : ''}">
+                <form:input type="text" path="email" class="form-control" placeholder="Email"></form:input>
+                <form:errors path="email"></form:errors>
             </div>
-     
-            <div class="row">
-                <div class="form-group col-md-12">
-                    <label class="col-md-3 control-lable" for="userProfiles">Roles</label>
-                    <div class="col-md-7">
-                        <form:select path="userProfiles" items="${roles}" multiple="true" itemValue="id" itemLabel="type" class="form-control input-sm" />
-                        <div class="has-error">
-                            <form:errors path="userProfiles" class="help-inline"/>
-                        </div>
-                    </div>
-                </div>
+        </spring:bind>
+        
+        <spring:bind path="phone">
+            <div class="form-group ${status.error ? 'has-error' : ''}">
+                <form:input type="text" path="phone" class="form-control" placeholder="Phone"></form:input>
+                <form:errors path="phone"></form:errors>
             </div>
-     
-            <div class="row">
-                <div class="form-actions floatRight">
-                    <c:choose>
-                        <c:when test="${edit}">
-                            <input type="submit" value="Update" class="btn btn-primary btn-sm"/> or <a href="<c:url value='/list' />">Cancel</a>
-                        </c:when>
-                        <c:otherwise>
-                            <input type="submit" value="Register" class="btn btn-primary btn-sm"/> or <a href="<c:url value='/list' />">Cancel</a>
-                        </c:otherwise>
-                    </c:choose>
-                </div>
-            </div>
-        </form:form>
-    </div>
+        </spring:bind>
+
+
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
+    </form:form>
+
+</div>
+<!-- /container -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
 </body>
 </html>
