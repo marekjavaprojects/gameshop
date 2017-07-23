@@ -6,21 +6,24 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Repository;
 
 import com.gameshop.entity.User;
 
+@Repository
 public class UserDAOImpl implements UserDAO {
 
 	@Autowired
-	private SessionFactory sessionFactory;
+	private SessionFactory sessionFactory;	
 	private Session currentSession;
-	
+
 	@Override
-	public List<User> getAllUsers() {		
+	public List<User> getAllUsers() {
 		currentSession = sessionFactory.getCurrentSession();
 		Query<User> query = currentSession.createQuery("from User", User.class);
 		List<User> users = query.getResultList();
-		
+
 		return users;
 	}
 
@@ -35,14 +38,7 @@ public class UserDAOImpl implements UserDAO {
 	@Override
 	public void createUser(User user) {
 		currentSession = sessionFactory.getCurrentSession();
-		try {		
-			currentSession.beginTransaction();
-			currentSession.save(user);
-			currentSession.getTransaction().commit();
-			
-		} finally {			
-			sessionFactory.close();
-		}		
+		currentSession.saveOrUpdate(user);
 	}
 
 	@Override

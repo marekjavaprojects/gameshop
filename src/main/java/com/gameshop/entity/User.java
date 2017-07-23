@@ -8,6 +8,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name = "user")
@@ -33,17 +37,23 @@ public class User {
 	private int userId;
 
 	@Column(name = "first_name")
+	@NotEmpty
 	private String firstName;
 
 	@Column(name = "last_name")
+	@NotEmpty
 	private String lastName;
 	
+	@NotEmpty
+    @Size(min = 4, max = 9, message = "Your login must be between 6 and 15 characters")
 	@Column(name = "login")
 	private String login;
 	
+	@NotEmpty(message = "Please enter your password.")
 	@Column(name = "password")
 	private String password;
 	
+	@Email
 	@Column(name = "email")
 	private String email;
 
@@ -54,7 +64,7 @@ public class User {
 	private double discount;
 	
 	@ManyToOne
-	@JoinColumn(name="user_role_id")
+	@JoinColumn(name="user_role_id", insertable=false, updatable = false, nullable = false, columnDefinition = "int default 2")
 	private UserRole userRole;
 
 	public int getUserId() {
@@ -119,8 +129,8 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User [userId=" + userId + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
-				+ ", phone=" + phone + ", discount=" + discount + "]";
+		return "User [userId=" + userId + ", firstName=" + firstName + ", lastName=" + lastName + ", login=" + login
+				+ ", password=" + password + ", email=" + email + ", phone=" + phone + ", discount=" + discount
+				+ ", userRole=" + userRole + "]";
 	}
-
 }
