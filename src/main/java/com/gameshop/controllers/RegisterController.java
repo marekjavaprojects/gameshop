@@ -21,8 +21,6 @@ public class RegisterController {
 	
 	@Autowired
 	UserService userService;
-	@Autowired
-    private PasswordEncoder passwordEncoder;
 	
 	@GetMapping("")
 	public String showRegisterPage(@ModelAttribute("user") User user, Model model) {		
@@ -34,7 +32,6 @@ public class RegisterController {
 		if(result.hasErrors()) {
 			return "register-form";
 		}
-		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		userService.createUser(user);
 		
 		return "redirect:/";

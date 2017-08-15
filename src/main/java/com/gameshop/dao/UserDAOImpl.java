@@ -6,6 +6,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
@@ -16,6 +17,8 @@ public class UserDAOImpl implements UserDAO {
 
 	@Autowired
 	private SessionFactory sessionFactory;	
+	@Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 	private Session currentSession;
 
 	@Override
@@ -34,10 +37,11 @@ public class UserDAOImpl implements UserDAO {
 
 		return user;
 	}
-
+	
 	@Override
 	public void createUser(User user) {
 		currentSession = sessionFactory.getCurrentSession();
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 		currentSession.saveOrUpdate(user);
 	}
 

@@ -55,8 +55,8 @@
 			<div class="collapse navbar-collapse"
 				id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
-					<li><a href="#">Sign in</a></li>
-					<li><a href="#">Sign up</a></li>
+					<li><a href="${pageContext.request.contextPath}/register">Sign in</a></li>
+					<li><a href="${pageContext.request.contextPath}/login">Sign up</a></li>
 				</ul>
 
 			</div>

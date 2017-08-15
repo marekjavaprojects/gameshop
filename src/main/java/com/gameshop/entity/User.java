@@ -1,136 +1,75 @@
 package com.gameshop.entity;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.Size;
-
-import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name = "user")
 public class User {
 
-	public User() {
+	private String username;
+	private String password;
+	private boolean enabled;
+	private Set<UserRole> userRole = new HashSet<UserRole>(0);
 
+	public User() {
 	}
 
-	public User(String firstName, String lastName, String login, String password, String email, String phone, double discount) {
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.login = login;
+	public User(String username, String password, boolean enabled) {
+		this.username = username;
 		this.password = password;
-		this.email = email;
-		this.phone = phone;
-		this.discount = discount;
+		this.enabled = enabled;
+	}
+
+	public User(String username, String password, boolean enabled, Set<UserRole> userRole) {
+		this.username = username;
+		this.password = password;
+		this.enabled = enabled;
+		this.userRole = userRole;
 	}
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "user_id")
-	private int userId;
-
-	@Column(name = "first_name")
-	@NotEmpty
-	private String firstName;
-
-	@Column(name = "last_name")
-	@NotEmpty
-	private String lastName;
-	
-	@NotEmpty
-    @Size(min = 4, max = 9, message = "Your login must be between 6 and 15 characters")
-	@Column(name = "login")
-	private String login;
-	
-	@NotEmpty(message = "Please enter your password.")
-	@Column(name = "password")
-	private String password;
-	
-	@Email
-	@Column(name = "email")
-	private String email;
-
-	@Column(name = "phone")
-	private String phone;
-
-	@Column(name = "discount")
-	private double discount;
-	
-	@ManyToOne
-	@JoinColumn(name="user_role_id", insertable=false, updatable = false, nullable = false, columnDefinition = "int default 2")
-	private UserRole userRole;
-
-	public int getUserId() {
-		return userId;
+	@Column(name = "username", unique = true, nullable = false, length = 45)
+	public String getUsername() {
+		return this.username;
 	}
 
-	public String getFirstName() {
-		return firstName;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-
-	public String getLogin() {
-		return login;
-	}
-
-	public void setLogin(String login) {
-		this.login = login;
-	}
-
+	@Column(name = "password", nullable = false, length = 60)
 	public String getPassword() {
-		return password;
+		return this.password;
 	}
 
 	public void setPassword(String password) {
 		this.password = password;
 	}
 
-	public String getEmail() {
-		return email;
+	@Column(name = "enabled", nullable = false)
+	public boolean isEnabled() {
+		return this.enabled;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
 	}
 
-	public String getPhone() {
-		return phone;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+	public Set<UserRole> getUserRole() {
+		return this.userRole;
 	}
 
-	public void setPhone(String phone) {
-		this.phone = phone;
+	public void setUserRole(Set<UserRole> userRole) {
+		this.userRole = userRole;
 	}
 
-	public double getDiscount() {
-		return discount;
-	}
-
-	public void setDiscount(double discount) {
-		this.discount = discount;
-	}
-
-	@Override
-	public String toString() {
-		return "User [userId=" + userId + ", firstName=" + firstName + ", lastName=" + lastName + ", login=" + login
-				+ ", password=" + password + ", email=" + email + ", phone=" + phone + ", discount=" + discount
-				+ ", userRole=" + userRole + "]";
-	}
 }

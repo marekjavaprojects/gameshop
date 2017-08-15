@@ -30,41 +30,15 @@
 			action='${pageContext.request.contextPath}/register/processForm'
 			class="form-horizontal">
 
+			
 			<div class="row">
 				<div class="form-group col-md-12">
-					<label class="col-md-3 control-lable" for="firstName">First
-						Name</label>
+					<label class="col-md-3 control-lable" for="username">User name</label>
 					<div class="col-md-7">
-						<form:input type="text" path="firstName" id="firstName"
+						<form:input type="text" path="username" id="username"
 							class="form-control input-sm" />
 						<div class="has-error">
-							<form:errors path="firstName" cssClass="error" />
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<div class="row">
-				<div class="form-group col-md-12">
-					<label class="col-md-3 control-lable" for="lastName">Last
-						Name</label>
-					<div class="col-md-7">
-						<form:input type="text" path="lastName" id="lastName"
-							class="form-control input-sm" />
-						<div class="has-error">
-							<form:errors path="lastName" cssClass="error" />
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="form-group col-md-12">
-					<label class="col-md-3 control-lable" for="login">Login</label>
-					<div class="col-md-7">
-						<form:input type="text" path="login" id="login"
-							class="form-control input-sm" />
-						<div class="has-error">
-							<form:errors path="login" cssClass="error" />
+							<form:errors path="username" cssClass="error" />
 						</div>
 					</div>
 				</div>
@@ -82,30 +56,6 @@
 				</div>
 			</div>
 
-			<div class="row">
-				<div class="form-group col-md-12">
-					<label class="col-md-3 control-lable" for="email">Email</label>
-					<div class="col-md-7">
-						<form:input type="text" path="email" id="email"
-							class="form-control input-sm" />
-						<div class="has-error">
-							<form:errors path="email" cssClass="error" />
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="form-group col-md-12">
-					<label class="col-md-3 control-lable" for="phone">Phone</label>
-					<div class="col-md-7">
-						<form:input type="text" path="phone" id="phone"
-							class="form-control input-sm" />
-						<div class="has-error">
-							<form:errors path="phone" cssClass="error" />
-						</div>
-					</div>
-				</div>
-			</div>
 			<div class="row">
 				<div class="form-actions floatRight">
 					<input type="submit" value="Register"
