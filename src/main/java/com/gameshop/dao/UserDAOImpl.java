@@ -1,5 +1,6 @@
 package com.gameshop.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -16,9 +17,8 @@ import com.gameshop.entity.User;
 public class UserDAOImpl implements UserDAO {
 
 	@Autowired
-	private SessionFactory sessionFactory;	
-	@Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+	private SessionFactory sessionFactory;
+	
 	private Session currentSession;
 
 	@Override
@@ -37,12 +37,32 @@ public class UserDAOImpl implements UserDAO {
 
 		return user;
 	}
-	
+
 	@Override
 	public void createUser(User user) {
 		currentSession = sessionFactory.getCurrentSession();
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+		//user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+		System.out.println("pass: " + user.getPassword());
 		currentSession.saveOrUpdate(user);
+	}
+
+	@SuppressWarnings("unchecked")
+	public User findByUserName(String username) {
+		System.out.println("findByUserName");
+		List<User> users = new ArrayList<User>();
+		currentSession = sessionFactory.getCurrentSession();
+
+		users = currentSession.createQuery("from User where username=?").setParameter(0, username).list();
+
+		if (users.size() > 0) {
+			System.out.println("znalazlo");
+			return users.get(0);
+		} else {
+			System.out.println("nie znalazlo");
+
+			return null;
+		}
+
 	}
 
 	@Override

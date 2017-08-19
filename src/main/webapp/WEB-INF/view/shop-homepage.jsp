@@ -34,7 +34,7 @@
 </head>
 <body>
 	<div class="page-header" align="center">
-		<h1>Welcome in PC GAME Shop!</h1>
+		<h1>Welcome in GAME Shop!</h1>
 	</div>
 	<!-- Navigation -->
 	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
