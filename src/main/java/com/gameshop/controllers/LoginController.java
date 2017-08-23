@@ -22,23 +22,22 @@ import com.gameshop.entity.User;
 
 @Controller
 public class LoginController {
-	
-	@GetMapping(value = "/hello")
-	public String showHello( Model model) {
-		System.out.println("adsads");
-		return "hello";
-	}	
+
+	@RequestMapping(value = "/admin**", method = RequestMethod.GET)
+	public ModelAndView adminPage() {
+
+		ModelAndView model = new ModelAndView();
+		model.addObject("title", "Spring Security + Hibernate Example");
+		model.addObject("message", "This page is for ROLE_ADMIN only!");
+		model.setViewName("admin");
+
+		return model;
+	}
+
 	
 	@GetMapping(value = "/login")
-	public String showLoginPage(@ModelAttribute("user") User user, Model model) {
-		System.out.println("adsads");
-		return "login-form";
-	}	
-	
-	@PostMapping(value = "/processLoginForm")
 	public ModelAndView login(@RequestParam(value = "error", required = false) String error,
 			@RequestParam(value = "logout", required = false) String logout, HttpServletRequest request) {
-		System.out.println("dadsaad");
 		ModelAndView model = new ModelAndView();
 		if (error != null) {
 			model.addObject("error", getErrorMessage(request, "SPRING_SECURITY_LAST_EXCEPTION"));
@@ -47,7 +46,7 @@ public class LoginController {
 		if (logout != null) {
 			model.addObject("msg", "You've been logged out successfully.");
 		}
-		model.setViewName("hello");
+		model.setViewName("login-form");
 
 		return model;
 

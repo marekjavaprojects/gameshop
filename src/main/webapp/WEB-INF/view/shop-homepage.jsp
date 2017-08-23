@@ -2,6 +2,7 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@page session="true"%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -16,7 +17,8 @@
 
 <title>PC Game Shop</title>
 <!-- Bootstrap Core CSS -->
-<link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css"
+<link
+	href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css"
 	rel="stylesheet">
 
 <!-- Custom CSS -->
@@ -34,7 +36,10 @@
 </head>
 <body>
 	<div class="page-header" align="center">
-		<h1>Welcome in GAME Shop!</h1>
+		<h1>
+			Welcome in GAME Shop! USER
+			<c:out value="${username}" />
+		</h1>
 	</div>
 	<!-- Navigation -->
 	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -50,17 +55,38 @@
 						class="icon-bar"></span>
 				</button>
 				<a class="navbar-brand" href="${pageContext.request.contextPath}">Home</a>
+				<c:if test="${not empty username}">
+				<a class="navbar-brand">Hello ${username }</a>
+				<a href="javascript:formSubmit()"> Logout</a>
+			</c:if>
 			</div>
 			<!-- Collect the nav links, forms, and other content for toggling -->
-			<div class="collapse navbar-collapse"
-				id="bs-example-navbar-collapse-1">
-				<ul class="nav navbar-nav">
-					<li><a href="${pageContext.request.contextPath}/register">Sign in</a></li>
-					<li><a href="${pageContext.request.contextPath}/login">Sign up</a></li>
-				</ul>
+			<c:url value="/logout" var="logoutUrl" />
+			<c:if test="${empty username}">
+				<div class="collapse navbar-collapse"
+					id="bs-example-navbar-collapse-1">
+					<ul class="nav navbar-nav">
+						<li><a href="${pageContext.request.contextPath}/register">Sign
+								in</a></li>
+						<li><a href="${pageContext.request.contextPath}/login">Sign
+								up</a></li>
+					</ul>
 
-			</div>
-			<!-- /.navbar-collapse -->
+				</div>
+				<!-- /.navbar-collapse -->
+			</c:if>
+			
+			<form action="${logoutUrl}" method="post" id="logoutForm">
+				<input type="hidden" name="${_csrf.parameterName}"
+					value="${_csrf.token}" />
+			</form>
+			<script>
+				function formSubmit() {
+					document.getElementById("logoutForm").submit();
+				}
+			</script>
+			
+
 		</div>
 		<!-- /.container -->
 
@@ -98,9 +124,7 @@
 
 			</div>
 
-			<h3>
-				${productListLabel}
-			</h3>
+			<h3>${productListLabel}</h3>
 
 
 			<div class="col-md-9">

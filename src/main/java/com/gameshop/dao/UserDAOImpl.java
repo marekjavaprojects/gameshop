@@ -18,7 +18,8 @@ public class UserDAOImpl implements UserDAO {
 
 	@Autowired
 	private SessionFactory sessionFactory;
-	
+	@Autowired
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	private Session currentSession;
 
 	@Override
@@ -41,8 +42,10 @@ public class UserDAOImpl implements UserDAO {
 	@Override
 	public void createUser(User user) {
 		currentSession = sessionFactory.getCurrentSession();
-		//user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+		// user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 		System.out.println("pass: " + user.getPassword());
+		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+		user.setEnabled(true);
 		currentSession.saveOrUpdate(user);
 	}
 
@@ -55,11 +58,8 @@ public class UserDAOImpl implements UserDAO {
 		users = currentSession.createQuery("from User where username=?").setParameter(0, username).list();
 
 		if (users.size() > 0) {
-			System.out.println("znalazlo");
 			return users.get(0);
 		} else {
-			System.out.println("nie znalazlo");
-
 			return null;
 		}
 

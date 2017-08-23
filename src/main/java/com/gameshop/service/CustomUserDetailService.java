@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -13,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.gameshop.dao.UserDAO;
 import com.gameshop.entity.UserRole;
@@ -20,18 +22,18 @@ import com.gameshop.entity.UserRole;
 @Service("customUserDetailService")
 public class CustomUserDetailService implements UserDetailsService {
 
+	@Autowired
 	private UserDAO userDAO;
 
+	@Transactional(readOnly=true)
 	@Override
 	public UserDetails loadUserByUsername(final String username)
                throws UsernameNotFoundException {
-
 		com.gameshop.entity.User user = userDAO.findByUserName(username);
 		List<GrantedAuthority> authorities = buildUserAuthority(user.getUserRole());
+		System.out.println(user.getUserRole().iterator().next());
 
 		return buildUserForAuthentication(user, authorities);
-
-
 	}
 
 	
@@ -53,14 +55,6 @@ public class CustomUserDetailService implements UserDetailsService {
 		List<GrantedAuthority> Result = new ArrayList<GrantedAuthority>(setAuths);
 
 		return Result;
-	}
-
-	public UserDAO getUserDAO() {
-		return userDAO;
-	}
-
-	public void setUserDAO(UserDAO userDao) {
-		this.userDAO = userDao;
 	}
 
 }

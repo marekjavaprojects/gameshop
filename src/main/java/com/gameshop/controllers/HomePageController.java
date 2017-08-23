@@ -1,5 +1,6 @@
 package com.gameshop.controllers;
 
+import java.security.Principal;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -21,8 +22,11 @@ public class HomePageController {
 	ProductService productService;
 
 	@GetMapping("/")
-	public String showHomePageWithFourLatestProducts(Model model) {
-
+	public String showHomePageWithFourLatestProducts(Principal principal, Model model) {
+		if(principal != null) {
+			model.addAttribute("username", principal.getName());
+		}
+		
 		List<Product> latestFourProducts = productService.getFourLatestProducts();
 		Set<String> categories = productService.fetchCategoriesFromProducts(productService.getProducts());
 		productListLabel = "Latest Games!";
