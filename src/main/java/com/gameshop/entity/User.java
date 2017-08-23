@@ -54,7 +54,7 @@ public class User {
 		this.password = password;
 	}
 
-	@Column(name = "enabled", nullable = false)
+	@Column(name = "enabled", columnDefinition = "int default 1", nullable = false)
 	public boolean isEnabled() {
 		return this.enabled;
 	}
