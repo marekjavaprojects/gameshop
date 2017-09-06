@@ -1,5 +1,6 @@
 package com.gameshop.controllers;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Set;
 
@@ -24,9 +25,10 @@ public class ProductController {
 	ProductService productService;
 
 	@GetMapping("/allProducts")
-	public String showAllProducts(Model model) {
-
-		
+	public String showAllProducts(Model model, Principal principal) {
+		if(principal != null) {
+			model.addAttribute("username", principal.getName());
+		}
 		List<Product> allProducts = productService.getProducts();
 		Set<String> categories = productService.fetchCategoriesFromProducts(productService.getProducts());
 		productListLabel = "Browse ALL games in the shop!";
@@ -34,29 +36,33 @@ public class ProductController {
 		model.addAttribute("categories", categories);
 		model.addAttribute("productListLabel", productListLabel);
 		
-		return "shop-homepage";
+		return "homepage";
 	}
 
 	@GetMapping("/{category}")
-	public String showProductsByCategory(@PathVariable("category") String category, Model model) {
-
+	public String showProductsByCategory(@PathVariable("category") String category, Model model, Principal principal) {
+		if(principal != null) {
+			model.addAttribute("username", principal.getName());
+		}
 		List<Product> productsByCategory = productService.getProductsByCategory(category);		
 		Set<String> categories = productService.fetchCategoriesFromProducts(productService.getProducts());
 
 		model.addAttribute("products", productsByCategory);
 		model.addAttribute("categories", categories);
 
-		return "shop-homepage";
+		return "homepage";
 	}
 
 	@GetMapping("/search")
-	public String searchProductsByName(@RequestParam(value = "productName") String productName, Model model) {
+	public String searchProductsByName(@RequestParam(value = "productName") String productName, Model model, Principal principal) {
 		Set<String> categories = productService.fetchCategoriesFromProducts(productService.getProducts());
-
+		if(principal != null) {
+			model.addAttribute("username", principal.getName());
+		}
 		if (productName.trim().compareTo("") == 0) {
 			model.addAttribute("categories", categories);
 
-			return "shop-homepage";
+			return "homepage";
 
 		}
 		List<Product> productsByName = productService.searchProductsByName(productName);
@@ -64,7 +70,7 @@ public class ProductController {
 		model.addAttribute("products", productsByName);
 		model.addAttribute("categories", categories);
 
-		return "shop-homepage";
+		return "homepage";
 	}
 
 }

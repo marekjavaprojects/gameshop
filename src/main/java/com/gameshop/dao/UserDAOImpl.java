@@ -52,10 +52,9 @@ public class UserDAOImpl implements UserDAO {
 	@SuppressWarnings("unchecked")
 	public User findByUserName(String username) {
 		System.out.println("findByUserName");
-		List<User> users = new ArrayList<User>();
 		currentSession = sessionFactory.getCurrentSession();
 
-		users = currentSession.createQuery("from User where username=?").setParameter(0, username).list();
+		List<User> users = currentSession.createQuery("from User where username=?").setParameter(0, username).list();
 
 		if (users.size() > 0) {
 			return users.get(0);
