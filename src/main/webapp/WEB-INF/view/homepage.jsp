@@ -70,15 +70,6 @@
 					<li><a href="#"><span
 							class=" glyphicon glyphicon-shopping-cart"></span> Cart</a></li>
 				</ul>
-				<form action="${pageContext.request.contextPath}/products/search"
-					method="get" class="navbar-form navbar-left">
-					<div class="form-group">
-						<input type="text" class="form-control" placeholder="Search"
-							name=productName>
-					</div>
-					<button type="submit" class="btn btn-default">Search</button>
-				</form>
-
 			</c:if>
 			<form action="${pageContext.request.contextPath}/products/search"
 				method="get" class="navbar-form navbar-left">
@@ -173,7 +164,7 @@
 		<footer>
 		<div class="row">
 			<div class="col-lg-12">
-				<p>Copyright &copy; Your Website 2014</p>
+				<p>Copyright &copy; Marek</p>
 			</div>
 		</div>
 		</footer>

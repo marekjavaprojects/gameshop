@@ -12,28 +12,30 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.gameshop.dao.UserDAO;
 import com.gameshop.entity.User;
 import com.gameshop.service.UserService;
 
 @Controller
 @RequestMapping("/register")
 public class RegisterController {
-	
+
 	@Autowired
 	UserService userService;
-	
+
 	@GetMapping("")
-	public String showRegisterPage(@ModelAttribute("user") User user, Model model) {		
-		return "register-form";
+	public String showRegisterPage(Model model) {
+		User user = new User();
+		model.addAttribute("user", user);
+		return "register";
 	}
-	
+
 	@PostMapping("/processForm")
-	public String processRegisterForm(@Valid @ModelAttribute("user") User user, BindingResult result, Model model) {	
-		if(result.hasErrors()) {
-			return "register-form";
+	public String processRegisterForm(@ModelAttribute("user") @Valid User user, BindingResult result, Model model) {
+		if (result.hasErrors()) {
+			return "register";
 		}
-		userService.createUser(user);
-		
 		return "redirect:/";
 	}
+
 }

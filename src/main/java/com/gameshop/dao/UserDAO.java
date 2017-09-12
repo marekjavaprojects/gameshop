@@ -2,9 +2,11 @@ package com.gameshop.dao;
 
 import java.util.List;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+
 import com.gameshop.entity.User;
 
-public interface UserDAO {
+public interface UserDAO extends JpaRepository<User, Long>{
 
 	public List<User> getAllUsers();
 
@@ -12,7 +14,9 @@ public interface UserDAO {
 
 	public void createUser(User user);
 
-	public void deleteUser(int userId);
+	User findByEmail(String email);
+
+	void deleteUser(User user);
 
 	public User findByUserName(String userName);
 }

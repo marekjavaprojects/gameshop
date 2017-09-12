@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
-
+import org.springframework.data.jpa.repository.JpaRepository;
 import com.gameshop.entity.Role;
 import com.gameshop.entity.User;
 
@@ -68,7 +68,12 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public void deleteUser(int userId) {
+	public User findByEmail(String email) {
+		return null;
+	}
+
+	@Override
+	public void deleteUser(User user) {
 	}
 
 }

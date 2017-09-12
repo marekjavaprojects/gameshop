@@ -14,18 +14,36 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name = "user")
 public class User {
-	private Long id;
-	private String username;
-	private String password;
-	private String passwordConfirm;
-	private Set<Role> roles;
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
+	
+	@NotNull
+	@NotEmpty
+	private String username;
+	
+	@NotNull
+	@NotEmpty
+	private String password;
+	
+	@Transient
+	private String passwordConfirm;
+	
+	@NotNull
+	@NotEmpty
+	private String email;
+	
+	@ManyToMany(cascade = { CascadeType.ALL })
+	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+	private Set<Role> roles;
+
 	public Long getId() {
 		return id;
 	}
@@ -50,7 +68,6 @@ public class User {
 		this.password = password;
 	}
 
-	@Transient
 	public String getPasswordConfirm() {
 		return passwordConfirm;
 	}
@@ -59,9 +76,14 @@ public class User {
 		this.passwordConfirm = passwordConfirm;
 	}
 
-	
-	@ManyToMany(cascade = {CascadeType.ALL})
-	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	public Set<Role> getRoles() {
 		return roles;
 	}
