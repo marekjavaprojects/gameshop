@@ -1,11 +1,14 @@
 package com.gameshop.entity;
 
+import java.math.BigDecimal;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Digits;
 
 @Entity
 @Table(name = "product")
@@ -14,9 +17,9 @@ public class Product {
 	public Product() {
 	}
 
-	public Product(int productId, String productName, String category, Double unitPrice, int quantity,
+	public Product(Long id, String productName, String category, BigDecimal  unitPrice, int quantity,
 			String pathToImage, String dateAdded) {
-		this.productId = productId;
+		this.id = id;
 		this.productName = productName;
 		this.category = category;
 		this.unitPrice = unitPrice;
@@ -27,8 +30,8 @@ public class Product {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "product_id")
-	private int productId;
+	@Column(name = "id")
+	private Long id;
 
 	@Column(name = "product_name")
 	private String productName;
@@ -37,7 +40,8 @@ public class Product {
 	private String category;
 
 	@Column(name = "unit_price")
-	private Double unitPrice;
+	@Digits(integer = 10, fraction = 2)
+	private BigDecimal unitPrice;
 
 	@Column(name = "quantity")
 	private int quantity;
@@ -64,11 +68,11 @@ public class Product {
 		this.category = category;
 	}
 
-	public Double getUnitPrice() {
+	public BigDecimal  getUnitPrice() {
 		return unitPrice;
 	}
 
-	public void setUnitPrice(Double unitPrice) {
+	public void setUnitPrice(BigDecimal  unitPrice) {
 		this.unitPrice = unitPrice;
 	}
 
@@ -88,8 +92,8 @@ public class Product {
 		this.pathToImage = pathToImage;
 	}
 
-	public int getProductId() {
-		return productId;
+	public Long getProductId() {
+		return id;
 	}
 
 	public String getDateAdded() {
@@ -102,7 +106,7 @@ public class Product {
 
 	@Override
 	public String toString() {
-		return "Product [productId=" + productId + ", productName=" + productName + ", category=" + category
+		return "Product [productId=" + id + ", productName=" + productName + ", category=" + category
 				+ ", unitPrice=" + unitPrice + ", quantity=" + quantity + ", pathToImage=" + pathToImage + "]";
 	}
 

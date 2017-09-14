@@ -3,7 +3,6 @@ package com.gameshop.controllers;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,26 +13,36 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.gameshop.entity.User;
 import com.gameshop.service.UserService;
+import com.gameshop.validator.UserValidator;
+
+
 
 @Controller
 @RequestMapping("/register")
 public class RegisterController {
-	
+
 	@Autowired
 	UserService userService;
-	
+
+    @Autowired
+	private UserValidator userValidator;
+    
 	@GetMapping("")
-	public String showRegisterPage(@ModelAttribute("user") User user, Model model) {		
-		return "register-form";
+	public String showRegisterPage(Model model) {
+		User user = new User();
+		model.addAttribute("user", user);
+		return "register";
 	}
-	
+
 	@PostMapping("/processForm")
-	public String processRegisterForm(@Valid @ModelAttribute("user") User user, BindingResult result, Model model) {	
-		if(result.hasErrors()) {
-			return "register-form";
+	public String processRegisterForm(@ModelAttribute("user") User user, BindingResult result, Model model) {
+		userValidator.validate(user, result);
+		System.out.println(result.toString());
+		if (result.hasErrors()) {
+			return "register";
 		}
 		userService.createUser(user);
-		
 		return "redirect:/";
 	}
+
 }

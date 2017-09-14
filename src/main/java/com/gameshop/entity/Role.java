@@ -43,7 +43,7 @@ public class Role {
         this.name = name;
     }
 
-    @ManyToMany(mappedBy = "roles", cascade = {CascadeType.ALL})
+    @ManyToMany(mappedBy = "roles")
     public Set<User> getUsers() {
         return users;
     }

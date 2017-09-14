@@ -36,17 +36,14 @@ public class LoginController {
 
 	
 	@GetMapping(value = "/login")
-	public ModelAndView login(@RequestParam(value = "error", required = false) String error,
-			@RequestParam(value = "logout", required = false) String logout, HttpServletRequest request) {
+	public ModelAndView login(@RequestParam(value = "error", required = false) String error, HttpServletRequest request) {
 		ModelAndView model = new ModelAndView();
 		if (error != null) {
 			model.addObject("error", getErrorMessage(request, "SPRING_SECURITY_LAST_EXCEPTION"));
+			System.out.println(error);
 		}
 
-		if (logout != null) {
-			model.addObject("msg", "You've been logged out successfully.");
-		}
-		model.setViewName("login-form");
+		model.setViewName("login");
 
 		return model;
 

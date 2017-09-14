@@ -35,7 +35,6 @@ public class ShoppingCartController {
 		productsList.add(String.valueOf(productId));
 		shoppingCart.setProducts(productsList);
 		model.addObject("cart", shoppingCart);
-		model.setViewName("shop-homepage");
 		return model;
 
 	}

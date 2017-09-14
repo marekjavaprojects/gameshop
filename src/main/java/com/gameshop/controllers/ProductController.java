@@ -26,9 +26,6 @@ public class ProductController {
 
 	@GetMapping("/allProducts")
 	public String showAllProducts(Model model, Principal principal) {
-		if(principal != null) {
-			model.addAttribute("username", principal.getName());
-		}
 		List<Product> allProducts = productService.getProducts();
 		Set<String> categories = productService.fetchCategoriesFromProducts(productService.getProducts());
 		productListLabel = "Browse ALL games in the shop!";
@@ -41,9 +38,6 @@ public class ProductController {
 
 	@GetMapping("/{category}")
 	public String showProductsByCategory(@PathVariable("category") String category, Model model, Principal principal) {
-		if(principal != null) {
-			model.addAttribute("username", principal.getName());
-		}
 		List<Product> productsByCategory = productService.getProductsByCategory(category);		
 		Set<String> categories = productService.fetchCategoriesFromProducts(productService.getProducts());
 
@@ -56,9 +50,6 @@ public class ProductController {
 	@GetMapping("/search")
 	public String searchProductsByName(@RequestParam(value = "productName") String productName, Model model, Principal principal) {
 		Set<String> categories = productService.fetchCategoriesFromProducts(productService.getProducts());
-		if(principal != null) {
-			model.addAttribute("username", principal.getName());
-		}
 		if (productName.trim().compareTo("") == 0) {
 			model.addAttribute("categories", categories);
 

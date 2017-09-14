@@ -28,9 +28,6 @@ public class HomePageController {
 	
 	@GetMapping("/")
 	public String showHomePageWithFourLatestProducts(Principal principal, Model model) {
-		if(principal != null) {
-			model.addAttribute("username", principal.getName());
-		}
 		
 		List<Product> latestFourProducts = productService.getFourLatestProducts();
 		Set<String> categories = productService.fetchCategoriesFromProducts(productService.getProducts());
