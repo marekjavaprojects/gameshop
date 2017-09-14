@@ -15,20 +15,21 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.gameshop.dao.UserDAO;
 import com.gameshop.entity.Role;
 import com.gameshop.entity.User;
+
+import com.gameshop.repository.*;
 
 @Service("customUserDetailService")
 public class CustomUserDetailService implements UserDetailsService {
 
 	@Autowired
-	private UserDAO userDAO;
+	private UserRepository userRepository;
 
 	@Override
 	@Transactional(readOnly = true)
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		User user = userDAO.findByUserName(username);
+		User user = userRepository.findByUsername(username);
 
 		Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
 		for (Role role : user.getRoles()) {

@@ -8,39 +8,45 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.gameshop.dao.ProductDAO;
 import com.gameshop.entity.Product;
+import com.gameshop.repository.ProductRepository;
 
 @Service
 public class ProductServiceImpl implements ProductService {
 
 	@Autowired
-	ProductDAO productDAO;
+	ProductRepository productRepository;
 
 	@Override
 	@Transactional
 	public List<Product> getProducts() {
-		return productDAO.getProducts();
+		return productRepository.findAll();
 	}
 
 	@Override
 	@Transactional
-	public Product getProductById(int productId) {
-		return productDAO.getProductById(productId);
+	public Product getProductById(Long id) {
+		return productRepository.getOne(id);
 	}
 
 	@Override
 	@Transactional
 	public List<Product> getFourLatestProducts() {
-		return productDAO.getFourLatestProducts();
+		return productRepository.findFourLastProducts();
 	}
-	
+
 	@Override
 	@Transactional
 	public List<Product> getProductsByCategory(String category) {
-		return productDAO.getProductsByCategory(category);
+		return productRepository.findProductsByCategory(category);
 	}
-	
+
+	@Override
+	@Transactional
+	public List<Product> searchProductsByName(String productName) {
+		return productRepository.searchProductsByName(productName);
+	}
+
 	public Set<String> fetchCategoriesFromProducts(List<Product> products) {
 
 		Set<String> categories = new HashSet<>();
@@ -49,12 +55,5 @@ public class ProductServiceImpl implements ProductService {
 		}
 		return categories;
 	}
-	
-	@Override
-	@Transactional
-	public List<Product> searchProductsByName(String productName) {
-		
-		return productDAO.searchProductsByName(productName);
 
-	}
 }

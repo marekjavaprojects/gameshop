@@ -2,14 +2,14 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
 <%@page session="true"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
-<head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
@@ -49,28 +49,32 @@
 			<ul class="nav navbar-nav">
 				<li class="active"><a href="${pageContext.request.contextPath}">Home</a></li>
 			</ul>
+			<sec:authorize var="loggedIn" access="isAuthenticated()" />
+			<c:choose>
+				<c:when test="${loggedIn}">
 
-			<c:if test="${empty username}">
-				<ul class="nav navbar-nav navbar-right">
-					<li><a href="${pageContext.request.contextPath}/register"><span
-							class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-					<li><a href="${pageContext.request.contextPath}/login"><span
-							class="glyphicon glyphicon-log-in"></span> Login</a></li>
-				</ul>
-			</c:if>
-			<c:if test="${not empty username}">
-				<ul class="nav navbar-nav navbar-right">
+					<ul class="nav navbar-nav navbar-right">
 
-					<li><a class="navbar-brand">Hello: ${username }</a></li>
+						<li><a class="navbar-brand">Hello: <%=request.getUserPrincipal().getName()%></a></li>
 
-					<li><a href="javascript:formSubmit()" class="navbar-brand">
-							<c:url value="/logout" var="logoutUrl" /> Logout
-					</a></li>
+						<li><a href="javascript:formSubmit()" class="navbar-brand">
+								<c:url value="/logout" var="logoutUrl" /> Logout
+						</a></li>
 
-					<li><a href="#"><span
-							class=" glyphicon glyphicon-shopping-cart"></span> Cart</a></li>
-				</ul>
-			</c:if>
+						<li><a href="#"><span
+								class=" glyphicon glyphicon-shopping-cart"></span> Cart</a></li>
+					</ul>
+				</c:when>
+				<c:otherwise>
+					<ul class="nav navbar-nav navbar-right">
+						<li><a href="${pageContext.request.contextPath}/register"><span
+								class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+						<li><a href="${pageContext.request.contextPath}/login"><span
+								class="glyphicon glyphicon-log-in"></span> Login</a></li>
+					</ul>
+				</c:otherwise>
+			</c:choose>
+
 			<form action="${pageContext.request.contextPath}/products/search"
 				method="get" class="navbar-form navbar-left">
 				<div class="form-group">
@@ -109,12 +113,9 @@
 							placeholder="Search for..." name="productName"> <span
 							class="input-group-btn">
 							<button class="btn btn-default" type="submit">Search</button>
-
 						</span>
 					</form>
-
 				</div>
-
 			</div>
 
 			<h3>${productListLabel}</h3>
@@ -132,8 +133,12 @@
 								<div class="caption">
 									<h4>
 										<a href="#">${product.productName}</a>
+
 									</h4>
-									<h4 class="pull-right">${product.unitPrice}</h4>
+									<h4>
+										<a href="#">Price: ${product.unitPrice}</a>
+
+									</h4>
 									<c:if test="${not empty username}">
 
 										<p>

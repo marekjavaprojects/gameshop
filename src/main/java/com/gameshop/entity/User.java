@@ -25,19 +25,13 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
-	@NotNull
-	@NotEmpty
 	private String username;
 	
-	@NotNull
-	@NotEmpty
 	private String password;
 	
 	@Transient
 	private String passwordConfirm;
 	
-	@NotNull
-	@NotEmpty
 	private String email;
 	
 	@ManyToMany(cascade = { CascadeType.ALL })
