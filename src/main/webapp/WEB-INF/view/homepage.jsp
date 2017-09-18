@@ -35,9 +35,7 @@
 	<div class="page-header" align="center">
 		<h1>
 			Welcome in GAME Shop!
-			<c:if test="${not empty cart}">
-				<c:out value="${cart.products}" />
-			</c:if>
+		
 		</h1>
 	</div>
 	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -61,7 +59,7 @@
 								<c:url value="/logout" var="logoutUrl" /> Logout
 						</a></li>
 
-						<li><a href="#"><span
+						<li><a href="${pageContext.request.contextPath}/cart"><span
 								class=" glyphicon glyphicon-shopping-cart"></span> Cart</a></li>
 					</ul>
 				</c:when>
@@ -137,16 +135,22 @@
 									</h4>
 									<h4>
 										<a href="#">Price: ${product.unitPrice}</a>
-
 									</h4>
-									<c:if test="${not empty username}">
+									<%-- <c:if test="${loggedIn}"> --%>
+									<p>
+									<form action="${pageContext.request.contextPath}/addToCart"
+										method="post">
+										<div class="form-group">
+											<input type="hidden" name="${_csrf.parameterName}"
+												value="${_csrf.token}" />
+											<button type="submit" class="btn btn-primary" name="id"
+												value="${product.id}">Submit</button>
+										</div>
+									</form>
+									</p>
 
-										<p>
-											<a
-												href="${pageContext.request.contextPath}/addToCart/${product.productId}"
-												class="list-group-item">Add to cart</a>
-										</p>
-									</c:if>
+									<%-- </c:if> --%>
+
 								</div>
 							</div>
 

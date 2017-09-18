@@ -1,17 +1,24 @@
 package com.gameshop.model;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-import org.springframework.context.annotation.ScopedProxyMode;
+
 import com.gameshop.entity.Product;
+
+import org.springframework.context.annotation.ScopedProxyMode;
 
 @Component
 @Scope(proxyMode = ScopedProxyMode.TARGET_CLASS, value = "session")
-public class ShoppingCart {
+public class ShoppingCart implements Serializable{
 
-	private List<String> products;
+
+	private static final long serialVersionUID = 1L;
+	
+	private List<Product> products = new ArrayList<Product>();
 	private double totalPrice;
 	private int numberOfProducts;
 
@@ -19,17 +26,16 @@ public class ShoppingCart {
 
 	}
 
-	public ShoppingCart(List<String> products, double totalPrice, int numberOfProducts) {
-		this.products = products;
+	public ShoppingCart( double totalPrice, int numberOfProducts) {
 		this.totalPrice = totalPrice;
 		this.numberOfProducts = numberOfProducts;
 	}
 
-	public List<String> getProducts() {
+	public List<Product> getProducts() {
 		return products;
 	}
 
-	public void setProducts(List<String> products) {
+	public void setProducts(List<Product> products) {
 		this.products = products;
 	}
 
@@ -48,4 +54,9 @@ public class ShoppingCart {
 	public void setNumberOfProducts(int numberOfProducts) {
 		this.numberOfProducts = numberOfProducts;
 	}
+	
+	public void addProduct(Product product) {
+		this.products.add(product);
+	}
 }
+
