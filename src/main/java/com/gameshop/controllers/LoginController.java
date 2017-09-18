@@ -25,7 +25,6 @@ public class LoginController {
 
 	@RequestMapping(value = "/admin**", method = RequestMethod.GET)
 	public ModelAndView adminPage() {
-
 		ModelAndView model = new ModelAndView();
 		model.addObject("title", "Spring Security + Hibernate Example");
 		model.addObject("message", "This page is for ROLE_ADMIN only!");

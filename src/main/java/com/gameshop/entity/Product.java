@@ -92,7 +92,7 @@ public class Product {
 		this.pathToImage = pathToImage;
 	}
 
-	public Long getProductId() {
+	public Long getId() {
 		return id;
 	}
 
