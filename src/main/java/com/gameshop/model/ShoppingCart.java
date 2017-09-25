@@ -7,8 +7,6 @@ import java.util.List;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import com.gameshop.entity.Product;
-
 import org.springframework.context.annotation.ScopedProxyMode;
 
 @Component
@@ -18,45 +16,46 @@ public class ShoppingCart implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
-	private List<Product> products = new ArrayList<Product>();
+	private List<CartItem> cartItems = new ArrayList<CartItem>();
 	private double totalPrice;
-	private int numberOfProducts;
+	private int numberOfItemsInCart;
 
 	public ShoppingCart() {
 
 	}
 
-	public ShoppingCart( double totalPrice, int numberOfProducts) {
+	
+	
+	public ShoppingCart( double totalPrice, int numberOfItemsInCart) {
 		this.totalPrice = totalPrice;
-		this.numberOfProducts = numberOfProducts;
+		this.numberOfItemsInCart = numberOfItemsInCart;
 	}
 
-	public List<Product> getProducts() {
-		return products;
+	public List<CartItem> getCartItems() {
+		return cartItems;
 	}
 
-	public void setProducts(List<Product> products) {
-		this.products = products;
+	public void setCartItems(List<CartItem> cartItems) {
+		this.cartItems = cartItems;
 	}
 
 	public double getTotalPrice() {
 		return totalPrice;
 	}
 
-	public void setTotalPrice(double totalPrice) {
+	public void setTotalPrice(double totalPrice) {		
 		this.totalPrice = totalPrice;
 	}
 
-	public int getNumberOfProducts() {
-		return numberOfProducts;
+	public int getNumberOfItemsInCart() {
+		return numberOfItemsInCart;
 	}
 
-	public void setNumberOfProducts(int numberOfProducts) {
-		this.numberOfProducts = numberOfProducts;
+	public void setNumberOfItemsInCart(int numberOfItemsInCart) {
+		this.numberOfItemsInCart = numberOfItemsInCart;
 	}
 	
-	public void addProduct(Product product) {
-		this.products.add(product);
+	public void addProduct(CartItem cartItem) {
+		this.cartItems.add(cartItem);
 	}
 }
-
