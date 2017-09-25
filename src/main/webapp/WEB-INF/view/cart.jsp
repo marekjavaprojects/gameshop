@@ -21,8 +21,9 @@
 <body>
 	<div class="container">
 
-		<table id="cart" class="table table-hover table-condensed">
-			<c:forEach var="product" items="${cart.products}" varStatus="i">
+		<form action="${pageContext.request.contextPath}/updateCart"
+			method="post">
+			<table id="cart" class="table table-hover table-condensed">
 
 				<thead>
 					<tr>
@@ -33,56 +34,59 @@
 						<th style="width: 10%"></th>
 					</tr>
 				</thead>
-				
-				<tbody>
-					<tr>
-						<td data-th="Product">
-							<div class="row">
-								<div class="col-sm-2 hidden-xs">
-									<img src="http://placehold.it/100x100" alt="..."
-										class="img-responsive" />
+				<c:forEach var="cartItem" items="${cart.cartItems}">
+
+					<tbody>
+						<tr>
+							<td data-th="Product">
+								<div class="row">
+									<div class="col-sm-2 hidden-xs">
+										<img
+											src="${pageContext.request.contextPath}/resources/games_images${cartItem.pathToImage}"
+											class="img-responsive" />
+									</div>
+									<div class="col-sm-10">
+										<h4 class="nomargin">${cartItem.productName}</h4>
+									</div>
 								</div>
-								<div class="col-sm-10">
-								
-									<h4 class="nomargin">${product.id}</h4>
-									<p>Quis aute iure reprehenderit in voluptate velit esse
-										cillum dolore eu fugiat nulla pariatur. Lorem ipsum dolor sit
-										amet.</p>
-								</div>
-							</div>
-						</td>
-						<td data-th="Price">$1.99</td>
-						<td data-th="Quantity"><input type="number"
-							class="form-control text-center" value="1"></td>
-						<td data-th="Subtotal" class="text-center">1.99</td>
-						<td class="actions" data-th="">
-							<button class="btn btn-info btn-sm">
-								<i class="fa fa-refresh"></i>
-							</button>
-							<button class="btn btn-danger btn-sm">
-								<i class="fa fa-trash-o"></i>
-							</button>
-						</td>
+							</td>
+							<td data-th="Price">${cartItem.unitPrice}</td>
+							<td data-th="Quantity"><input type="number"
+								class="form-control text-center" name="quantity" value="${cartItem.quantity}" ></td>
+							<td data-th="Subtotal" class="text-center">${cartItem.totalPrice}</td>
+							<td class="actions" data-th="">
+								<button class="btn btn-danger btn-sm">
+									<i class="fa fa-trash-o"></i>
+								</button>
+							</td>
+						</tr>
+				</c:forEach>
+
+				</tbody>
+
+				<tfoot>
+					<tr class="visible-xs">
+						<td class="text-center"><strong>Total
+								${cart.totalPrice}</strong></td>
 					</tr>
-			</c:forEach>
-
-			</tbody>
-
-			<tfoot>
-				<tr class="visible-xs">
-					<td class="text-center"><strong>Total 1.99</strong></td>
-				</tr>
-				<tr>
-					<td><a href="#" class="btn btn-warning"><i
-							class="fa fa-angle-left"></i> Continue Shopping</a></td>
-					<td colspan="2" class="hidden-xs"></td>
-					<td class="hidden-xs text-center"><strong>Total $1.99</strong></td>
-					<td><a href="#" class="btn btn-success btn-block">Checkout
-							<i class="fa fa-angle-right"></i>
-					</a></td>
-				</tr>
-			</tfoot>
-		</table>
+					<tr>
+						<td><a href="${pageContext.request.contextPath}"
+							class="btn btn-warning"><i class="fa fa-angle-left"></i>
+								Continue Shopping</a></td>
+						<td colspan="2" class="hidden-xs"></td>
+						<td class="hidden-xs text-center"><strong>Total
+								${cart.totalPrice}</strong></td>
+						<td><input type="hidden" name="${_csrf.parameterName}"
+							value="${_csrf.token}" /> <input
+							class="btn btn-success btn-block" type="submit" value="Update">
+						</td>
+						<td><a href="#" class="btn btn-success btn-block">Checkout
+								<i class="fa fa-angle-right"></i>
+						</a></td>
+					</tr>
+				</tfoot>
+			</table>
+		</form>
 	</div>
 </body>
 </html>

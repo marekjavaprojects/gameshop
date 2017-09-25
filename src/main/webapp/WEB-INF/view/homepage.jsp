@@ -33,10 +33,7 @@
 </head>
 <body>
 	<div class="page-header" align="center">
-		<h1>
-			Welcome in GAME Shop!
-		
-		</h1>
+		<h1>Welcome in GAME Shop!</h1>
 	</div>
 	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 	<div class="container">
@@ -136,20 +133,20 @@
 									<h4>
 										<a href="#">Price: ${product.unitPrice}</a>
 									</h4>
-									<%-- <c:if test="${loggedIn}"> --%>
-									<p>
-									<form action="${pageContext.request.contextPath}/addToCart"
-										method="post">
-										<div class="form-group">
-											<input type="hidden" name="${_csrf.parameterName}"
-												value="${_csrf.token}" />
-											<button type="submit" class="btn btn-primary" name="id"
-												value="${product.id}">Submit</button>
-										</div>
-									</form>
-									</p>
+									<c:if test="${loggedIn}">
+										<p>
+										<form action="${pageContext.request.contextPath}/addToCart"
+											method="post">
+											<div class="form-group">
+												<input type="hidden" name="${_csrf.parameterName}"
+													value="${_csrf.token}" />
+												<button type="submit" class="btn btn-primary" name="id"
+													value="${product.id}">Submit</button>
+											</div>
+										</form>
+										</p>
 
-									<%-- </c:if> --%>
+									</c:if>
 
 								</div>
 							</div>
