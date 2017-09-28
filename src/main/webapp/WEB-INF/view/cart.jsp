@@ -21,7 +21,7 @@
 <body>
 	<div class="container">
 
-		<form action="${pageContext.request.contextPath}/updateCart"
+		<form action="${pageContext.request.contextPath}/cart/updateCart"
 			method="post">
 			<table id="cart" class="table table-hover table-condensed">
 
@@ -53,11 +53,11 @@
 							<td data-th="Price">${cartItem.unitPrice}</td>
 							<td data-th="Quantity"><input type="number"
 								class="form-control text-center" name="quantity" value="${cartItem.quantity}" ></td>
-							<td data-th="Subtotal" class="text-center">${cartItem.totalPrice}</td>
+							<td data-th="Subtotal" class="text-center">${cartItem.subtotalPrice}</td>
 							<td class="actions" data-th="">
-								<button class="btn btn-danger btn-sm">
+								<a href="${pageContext.request.contextPath}/cart/deleteItem/${cartItem.id}" class="btn btn-danger btn-sm">								
 									<i class="fa fa-trash-o"></i>
-								</button>
+								</a>
 							</td>
 						</tr>
 				</c:forEach>
