@@ -7,18 +7,24 @@ import com.gameshop.entity.Product;
 
 public class CartItem {
 
+	private long id;
 	private String productName;
 	private int quantity;
 	private double unitPrice;
-	private double totalPrice;
+	private double subtotalPrice;
 	private String pathToImage;
 
 	public CartItem(Product product) {
 		this.productName = product.getProductName();
+		this.id = product.getId();
 		this.quantity = 1;
 		this.unitPrice = product.getUnitPrice().doubleValue();
-		this.totalPrice = calculateTotalPrice();
+		this.subtotalPrice = calculateTotalPrice();
 		this.pathToImage = product.getPathToImage();
+	}
+
+	public long getId() {
+		return id;
 	}
 
 	public String getPathToImage() {
@@ -57,12 +63,12 @@ public class CartItem {
 		this.unitPrice = unitPrice;
 	}
 
-	public double getTotalPrice() {
-		return totalPrice * quantity;
+	public double getSubtotalPrice() {
+		return subtotalPrice * quantity;
 	}
 
-	public void setTotalPrice(double totalPrice) {
-		this.totalPrice = totalPrice;
+	public void setSubtotalPrice(double subtotalPrice) {
+		this.subtotalPrice = subtotalPrice;
 	}
 
 }

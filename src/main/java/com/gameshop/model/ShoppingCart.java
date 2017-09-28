@@ -24,8 +24,6 @@ public class ShoppingCart implements Serializable{
 
 	}
 
-	
-	
 	public ShoppingCart( double totalPrice, int numberOfItemsInCart) {
 		this.totalPrice = totalPrice;
 		this.numberOfItemsInCart = numberOfItemsInCart;
@@ -56,6 +54,14 @@ public class ShoppingCart implements Serializable{
 	}
 	
 	public void addProduct(CartItem cartItem) {
+		
 		this.cartItems.add(cartItem);
+		this.totalPrice += cartItem.getSubtotalPrice();
+
+	}
+	
+	public void deleteProduct(CartItem cartItem) {
+		this.cartItems.remove(cartItem);
+		this.totalPrice -= cartItem.getSubtotalPrice();
 	}
 }

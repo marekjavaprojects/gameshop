@@ -38,9 +38,6 @@
 	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 	<div class="container">
 		<div class="container-fluid">
-			<div class="navbar-header">
-				<a class="navbar-brand" href="#">WebSiteName</a>
-			</div>
 			<ul class="nav navbar-nav">
 				<li class="active"><a href="${pageContext.request.contextPath}">Home</a></li>
 			</ul>
@@ -56,7 +53,7 @@
 								<c:url value="/logout" var="logoutUrl" /> Logout
 						</a></li>
 
-						<li><a href="${pageContext.request.contextPath}/cart"><span
+						<li><a href="${pageContext.request.contextPath}/cart/showCart"><span
 								class=" glyphicon glyphicon-shopping-cart"></span> Cart</a></li>
 					</ul>
 				</c:when>
@@ -134,8 +131,8 @@
 										<a href="#">Price: ${product.unitPrice}</a>
 									</h4>
 									<c:if test="${loggedIn}">
-										<p>
-										<form action="${pageContext.request.contextPath}/addToCart"
+									
+										<form action="${pageContext.request.contextPath}/cart/addToCart"
 											method="post">
 											<div class="form-group">
 												<input type="hidden" name="${_csrf.parameterName}"
@@ -144,7 +141,6 @@
 													value="${product.id}">Submit</button>
 											</div>
 										</form>
-										</p>
 
 									</c:if>
 
