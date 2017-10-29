@@ -15,7 +15,9 @@ public interface ProductService {
 	public List<Product> getFourLatestProducts();
 
 	public List<Product> getProductsByCategory(String category);
-
+	
 	public List<Product> searchProductsByName(String productName);
+	
+	public Product findProductByName(String productName);
 
 }

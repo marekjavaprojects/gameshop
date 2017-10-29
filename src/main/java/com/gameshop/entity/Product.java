@@ -17,9 +17,8 @@ public class Product {
 	public Product() {
 	}
 
-	public Product(Long id, String productName, String category, BigDecimal  unitPrice, int quantity,
+	public Product(String productName, String category, BigDecimal  unitPrice, int quantity,
 			String pathToImage, String dateAdded) {
-		this.id = id;
 		this.productName = productName;
 		this.category = category;
 		this.unitPrice = unitPrice;
@@ -30,8 +29,8 @@ public class Product {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
-	private Long id;
+	@Column(name = "productId")
+	private Long productId;
 
 	@Column(name = "product_name")
 	private String productName;
@@ -92,8 +91,8 @@ public class Product {
 		this.pathToImage = pathToImage;
 	}
 
-	public Long getId() {
-		return id;
+	public Long getProductId() {
+		return productId;
 	}
 
 	public String getDateAdded() {
@@ -106,7 +105,7 @@ public class Product {
 
 	@Override
 	public String toString() {
-		return "Product [productId=" + id + ", productName=" + productName + ", category=" + category
+		return "Product [productId=" + productId + ", productName=" + productName + ", category=" + category
 				+ ", unitPrice=" + unitPrice + ", quantity=" + quantity + ", pathToImage=" + pathToImage + "]";
 	}
 

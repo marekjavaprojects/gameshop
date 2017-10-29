@@ -53,7 +53,8 @@
 								<c:url value="/logout" var="logoutUrl" /> Logout
 						</a></li>
 
-						<li><a href="${pageContext.request.contextPath}/cart/showCart"><span
+						<li><a
+							href="${pageContext.request.contextPath}/cart/showCart"><span
 								class=" glyphicon glyphicon-shopping-cart"></span> Cart</a></li>
 					</ul>
 				</c:when>
@@ -98,15 +99,6 @@
 							class="list-group-item">${category}</a>
 
 					</c:forEach>
-					<form action="${pageContext.request.contextPath}/products/search"
-						method="get">
-
-						<input type="text" class="form-control"
-							placeholder="Search for..." name="productName"> <span
-							class="input-group-btn">
-							<button class="btn btn-default" type="submit">Search</button>
-						</span>
-					</form>
 				</div>
 			</div>
 
@@ -131,14 +123,15 @@
 										<a href="#">Price: ${product.unitPrice}</a>
 									</h4>
 									<c:if test="${loggedIn}">
-									
-										<form action="${pageContext.request.contextPath}/cart/addToCart"
+
+										<form
+											action="${pageContext.request.contextPath}/cart/addToCart"
 											method="post">
 											<div class="form-group">
 												<input type="hidden" name="${_csrf.parameterName}"
 													value="${_csrf.token}" />
-												<button type="submit" class="btn btn-primary" name="id"
-													value="${product.id}">Submit</button>
+												<button type="submit" class="btn btn-primary" name="productId"
+													value="${product.productId}">Add to cart</button>
 											</div>
 										</form>
 

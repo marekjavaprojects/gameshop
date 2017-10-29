@@ -9,21 +9,16 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.gameshop.entity.User;
-
 @Controller
 public class LoginController {
 
-	@RequestMapping(value = "/admin**", method = RequestMethod.GET)
+	@GetMapping(value = "/admin**")
 	public ModelAndView adminPage() {
 		ModelAndView model = new ModelAndView();
 		model.addObject("title", "Spring Security + Hibernate Example");
@@ -33,26 +28,34 @@ public class LoginController {
 		return model;
 	}
 
-	
 	@GetMapping(value = "/login")
-	public ModelAndView login(@RequestParam(value = "error", required = false) String error, HttpServletRequest request) {
+	public ModelAndView login(@RequestParam(value = "error", required = false) String error,
+			HttpServletRequest request) {
 		ModelAndView model = new ModelAndView();
 		if (error != null) {
 			model.addObject("error", getErrorMessage(request, "SPRING_SECURITY_LAST_EXCEPTION"));
 			System.out.println(error);
 		}
-
 		model.setViewName("login");
-
 		return model;
-
 	}
 
-	// customize the error message
+	@GetMapping(value = "/403")
+	public ModelAndView accesssDenied() {
+		ModelAndView model = new ModelAndView();
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+		if (!(auth instanceof AnonymousAuthenticationToken)) {
+			UserDetails userDetail = (UserDetails) auth.getPrincipal();
+			System.out.println(userDetail);
+			model.addObject("username", userDetail.getUsername());
+		}
+		model.setViewName("403");
+		return model;
+	}
+
 	private String getErrorMessage(HttpServletRequest request, String key) {
-
 		Exception exception = (Exception) request.getSession().getAttribute(key);
-
 		String error = "";
 		if (exception instanceof BadCredentialsException) {
 			error = "Invalid username and password!";
@@ -61,28 +64,6 @@ public class LoginController {
 		} else {
 			error = "Invalid username and password!";
 		}
-
 		return error;
-	}
-
-	// for 403 access denied page
-	@RequestMapping(value = "/403", method = RequestMethod.GET)
-	public ModelAndView accesssDenied() {
-
-		ModelAndView model = new ModelAndView();
-
-		// check if user is login
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		if (!(auth instanceof AnonymousAuthenticationToken)) {
-			UserDetails userDetail = (UserDetails) auth.getPrincipal();
-			System.out.println(userDetail);
-
-			model.addObject("username", userDetail.getUsername());
-
-		}
-
-		model.setViewName("403");
-		return model;
-
 	}
 }
