@@ -20,18 +20,21 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	@Transactional
 	public List<Product> getProducts() {
+		
 		return productRepository.findAll();
 	}
 
 	@Override
 	@Transactional
 	public Product getProductById(Long id) {
+		
 		return productRepository.getOne(id);
 	}
 
 	@Override
 	@Transactional
 	public List<Product> getFourLatestProducts() {
+		
 		return productRepository.findFourLastProducts();
 	}
 
@@ -44,6 +47,7 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	@Transactional
 	public Product findProductByName(String productName) {
+		
 		return productRepository.findProductByName(productName);
 	}
 
@@ -53,14 +57,13 @@ public class ProductServiceImpl implements ProductService {
 		for (Product product : products) {
 			categories.add(product.getCategory());
 		}
+		
 		return categories;
 	}
 
 	@Override
 	public List<Product> searchProductsByName(String productName) {
+		
 		return productRepository.searchProductsByName(productName);
 	}
-
-
-
 }

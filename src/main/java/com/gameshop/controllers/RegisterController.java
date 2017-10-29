@@ -1,7 +1,5 @@
 package com.gameshop.controllers;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,7 +21,6 @@ public class RegisterController {
 
 	@Autowired
 	UserService userService;
-
     @Autowired
 	private UserValidator userValidator;
     
@@ -31,6 +28,7 @@ public class RegisterController {
 	public String showRegisterPage(Model model) {
 		User user = new User();
 		model.addAttribute("user", user);
+		
 		return "register";
 	}
 
@@ -41,7 +39,7 @@ public class RegisterController {
 			return "register";
 		}
 		userService.createUser(user);
+		
 		return "redirect:/";
 	}
-
 }

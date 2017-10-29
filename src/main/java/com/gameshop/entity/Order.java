@@ -2,7 +2,6 @@ package com.gameshop.entity;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -15,12 +14,21 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.validation.constraints.Digits;
 
 @Entity
 @Table(name = "orders")
 public class Order {
+
+	public Order(BigDecimal totalPrice, User user) {
+		this.orderDetails = new ArrayList<OrderDetails>();
+		this.totalPrice = totalPrice;
+		this.user = user;
+	}
+
+	public Order() {
+		this.orderDetails = new ArrayList<OrderDetails>();
+	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,7 +43,7 @@ public class Order {
 	@JoinColumn(name = "user_id")
 	private User user;
 
-	@OneToMany(mappedBy = "order", cascade=CascadeType.ALL)
+	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
 	private List<OrderDetails> orderDetails;
 
 	public List<OrderDetails> getOrderDetails() {
@@ -64,16 +72,6 @@ public class Order {
 
 	public void setUser(User user) {
 		this.user = user;
-	}
-
-	public Order(BigDecimal totalPrice, User user) {
-		this.orderDetails = new ArrayList<OrderDetails>();
-		this.totalPrice = totalPrice;
-		this.user = user;
-	}
-
-	public Order() {
-		this.orderDetails = new ArrayList<OrderDetails>();
 	}
 
 	@Override

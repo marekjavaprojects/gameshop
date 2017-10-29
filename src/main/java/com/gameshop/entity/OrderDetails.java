@@ -1,6 +1,5 @@
 package com.gameshop.entity;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -34,13 +33,13 @@ public class OrderDetails {
 	@Min(value = 1)
 	private int quantity;
 
-	public OrderDetails() {
-	}
-
 	public OrderDetails(Product product, Order order, int quantity) {
 		this.product = product;
 		this.order = order;
 		this.quantity = quantity;
+	}
+
+	public OrderDetails() {
 	}
 
 	public Long getOrderDetailsId() {
@@ -73,6 +72,7 @@ public class OrderDetails {
 
 	@Override
 	public String toString() {
-		return "OrderDetails [id=" + orderDetailsId + ", product=" + product + ", order=" + order + ", quantity=" + quantity + "]";
+		return "OrderDetails [id=" + orderDetailsId + ", product=" + product + ", order=" + order + ", quantity="
+				+ quantity + "]";
 	}
 }

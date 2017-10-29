@@ -1,9 +1,6 @@
 package com.gameshop.service;
 
-import java.util.ArrayList;
-
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +27,6 @@ public class CustomUserDetailService implements UserDetailsService {
 	@Transactional(readOnly = true)
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		User user = userRepository.findByUsername(username);
-
 		Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
 		for (Role role : user.getRoles()) {
 			grantedAuthorities.add(new SimpleGrantedAuthority(role.getName()));
@@ -38,7 +34,5 @@ public class CustomUserDetailService implements UserDetailsService {
 
 		return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
 				grantedAuthorities);
-
 	}
-
 }

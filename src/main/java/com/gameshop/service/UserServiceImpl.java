@@ -1,6 +1,5 @@
 package com.gameshop.service;
 
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 
@@ -9,7 +8,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.gameshop.entity.Role;
 import com.gameshop.entity.User;
 import com.gameshop.repository.RoleRepository;
 import com.gameshop.repository.UserRepository;
@@ -19,10 +17,8 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	UserRepository userRepository;
-
 	@Autowired
 	RoleRepository roleRepository;
-
 	@Autowired
 	private BCryptPasswordEncoder bcryptEncoder;
 

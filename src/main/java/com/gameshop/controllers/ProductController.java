@@ -20,10 +20,9 @@ import com.gameshop.service.ProductService;
 public class ProductController {
 	
 	private String productListLabel;
-
 	@Autowired
 	ProductService productService;
-
+	
 	@GetMapping("/allProducts")
 	public String showAllProducts(Model model, Principal principal) {
 		List<Product> allProducts = productService.getProducts();

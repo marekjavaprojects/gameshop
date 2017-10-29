@@ -24,14 +24,11 @@ import com.gameshop.service.ShoppingCartService;
 public class ShoppingCartController {
 
 	@Autowired
-	private ProductService productService;
-	
+	private ProductService productService;	
 	@Autowired
-	private ShoppingCartService shoppingCartService;
-	
+	private ShoppingCartService shoppingCartService;	
 	@Autowired
-	private ShoppingCart shoppingCart;
-	
+	private ShoppingCart shoppingCart;	
 	private CartItem cartItem;
 
 	@RequestMapping(value = "/addToCart", method=RequestMethod.POST)
@@ -41,24 +38,25 @@ public class ShoppingCartController {
 		shoppingCartService.addToCart(cartItem);
 		model.addObject("cart", shoppingCart);
 		model.setViewName("redirect:/");
+		
 		return model;
-
 	}
 	
 	@RequestMapping(value = "/updateCart", method=RequestMethod.POST)
 	public ModelAndView updateCart(HttpServletRequest request, HttpSession session, ModelAndView model) {
 		shoppingCartService.updateCartItem(request.getParameterValues("quantity"));
 		model.setViewName("cart");
+		
 		return model;
 	}
 
 	@RequestMapping(value = "/showCart", method=RequestMethod.GET)
-	public ModelAndView showCart(ModelAndView model) {
-	
+	public ModelAndView showCart(ModelAndView model) {	
 		for(CartItem item : shoppingCart.getCartItems()) {
 			System.out.println(item.getProductName());
 		}
 		model.setViewName("cart");
+		
 		return model;
 	}
 	
@@ -68,8 +66,7 @@ public class ShoppingCartController {
 		CartItem itemToDelete = shoppingCartService.findCartItemById(productId);
 		shoppingCartService.deleteItemFromCart(itemToDelete);
 		model.setViewName("cart");
-		return model;
 		
+		return model;		
 	}	
-
 }

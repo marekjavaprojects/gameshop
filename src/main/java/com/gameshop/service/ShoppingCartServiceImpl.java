@@ -3,14 +3,10 @@ package com.gameshop.service;
 import java.math.BigDecimal;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
-import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 
-import com.gameshop.entity.Product;
 import com.gameshop.model.CartItem;
 import com.gameshop.model.ShoppingCart;
 
@@ -20,7 +16,6 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
 	@Autowired
 	private ShoppingCart shoppingCart;
-
 	private BigDecimal totalPrice = BigDecimal.ZERO;
 
 	@Override
@@ -59,6 +54,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 				return item;
 			}
 		}
+		//todo: refactor return null
 		return null;
 	}
 
@@ -70,6 +66,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 				return item;
 			}
 		}
+		//todo: refactor return null
 		return null;
 	}
 

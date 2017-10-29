@@ -25,8 +25,7 @@ public class HomePageController {
 	private ShoppingCart shoppingCart;
 	
 	@GetMapping("/")
-	public String showHomePageWithFourLatestProducts(HttpServletRequest request, Model model) {
-		
+	public String showHomePageWithFourLatestProducts(HttpServletRequest request, Model model) {		
 		List<Product> latestFourProducts = productService.getFourLatestProducts();
 		Set<String> categories = productService.fetchCategoriesFromProducts(productService.getProducts());
 		productListLabel = "Latest Games!";
@@ -35,6 +34,7 @@ public class HomePageController {
 		model.addAttribute("products", latestFourProducts);
 		model.addAttribute("categories", categories);
 		model.addAttribute("productListLabel", productListLabel);
+		
 		return "homepage";
 	}	
 }

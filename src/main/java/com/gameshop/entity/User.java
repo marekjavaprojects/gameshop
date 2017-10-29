@@ -23,19 +23,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Entity
 @Table(name = "user")
 public class User {
-
-	public User(String username, String password, String passwordConfirm, String email, Set<Role> roles) {
-		this.username = username;
-		this.password = password;
-		this.passwordConfirm = passwordConfirm;
-		this.email = email;
-		this.roles = roles;
-	}
-
-	public User() {
-
-	}
-
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "user_id")
@@ -60,12 +48,20 @@ public class User {
 	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles;
 
-	public Long getId() {
-		return userId;
+	public User(String username, String password, String passwordConfirm, String email, Set<Role> roles) {
+		this.username = username;
+		this.password = password;
+		this.passwordConfirm = passwordConfirm;
+		this.email = email;
+		this.roles = roles;
 	}
 
-	public void setId(Long userId) {
-		this.userId = userId;
+	public User() {
+
+	}
+
+	public Long getId() {
+		return userId;
 	}
 
 	public String getUsername() {
