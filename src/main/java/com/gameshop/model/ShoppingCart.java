@@ -1,6 +1,7 @@
 package com.gameshop.model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,14 +18,14 @@ public class ShoppingCart implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private List<CartItem> cartItems = new ArrayList<CartItem>();
-	private double totalPrice;
+	private BigDecimal totalPrice = new BigDecimal(0);
 	private int numberOfItemsInCart;
 
 	public ShoppingCart() {
 
 	}
 
-	public ShoppingCart( double totalPrice, int numberOfItemsInCart) {
+	public ShoppingCart(BigDecimal totalPrice, int numberOfItemsInCart) {
 		this.totalPrice = totalPrice;
 		this.numberOfItemsInCart = numberOfItemsInCart;
 	}
@@ -37,11 +38,11 @@ public class ShoppingCart implements Serializable{
 		this.cartItems = cartItems;
 	}
 
-	public double getTotalPrice() {
+	public BigDecimal getTotalPrice() {
 		return totalPrice;
 	}
 
-	public void setTotalPrice(double totalPrice) {		
+	public void setTotalPrice(BigDecimal totalPrice) {		
 		this.totalPrice = totalPrice;
 	}
 
@@ -56,12 +57,12 @@ public class ShoppingCart implements Serializable{
 	public void addProduct(CartItem cartItem) {
 		
 		this.cartItems.add(cartItem);
-		this.totalPrice += cartItem.getSubtotalPrice();
+		this.totalPrice = totalPrice.add(cartItem.getSubtotalPrice());
 
 	}
 	
 	public void deleteProduct(CartItem cartItem) {
 		this.cartItems.remove(cartItem);
-		this.totalPrice -= cartItem.getSubtotalPrice();
+		this.totalPrice = totalPrice.subtract(cartItem.getSubtotalPrice());
 	}
 }

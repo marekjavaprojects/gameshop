@@ -21,18 +21,18 @@ import javax.persistence.UniqueConstraint;
 @Table(name = "role")
 public class Role {
 
-	private Long id;
+	private Long roleId;
     private String name;
     private Set<User> users;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     public Long getId() {
-        return id;
+        return roleId;
     }
 
     public void setId(Long id) {
-        this.id = id;
+        this.roleId = id;
     }
 
     public String getName() {

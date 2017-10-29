@@ -43,8 +43,8 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	@Transactional
-	public List<Product> searchProductsByName(String productName) {
-		return productRepository.searchProductsByName(productName);
+	public Product findProductByName(String productName) {
+		return productRepository.findProductByName(productName);
 	}
 
 	public Set<String> fetchCategoriesFromProducts(List<Product> products) {
@@ -55,5 +55,12 @@ public class ProductServiceImpl implements ProductService {
 		}
 		return categories;
 	}
+
+	@Override
+	public List<Product> searchProductsByName(String productName) {
+		return productRepository.searchProductsByName(productName);
+	}
+
+
 
 }

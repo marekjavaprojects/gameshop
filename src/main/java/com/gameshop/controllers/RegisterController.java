@@ -37,7 +37,6 @@ public class RegisterController {
 	@PostMapping("/processForm")
 	public String processRegisterForm(@ModelAttribute("user") User user, BindingResult result, Model model) {
 		userValidator.validate(user, result);
-		System.out.println(result.toString());
 		if (result.hasErrors()) {
 			return "register";
 		}

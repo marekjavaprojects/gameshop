@@ -1,21 +1,12 @@
 package com.gameshop.controllers;
 
-import java.security.Principal;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,7 +19,7 @@ import com.gameshop.service.ProductService;
 import com.gameshop.service.ShoppingCartService;
 
 @Controller
-@Scope("request")
+@Scope("session")
 @RequestMapping(value = "/cart")
 public class ShoppingCartController {
 
@@ -44,12 +35,12 @@ public class ShoppingCartController {
 	private CartItem cartItem;
 
 	@RequestMapping(value = "/addToCart", method=RequestMethod.POST)
-	public ModelAndView addToCart(@RequestParam("id")Long productId, ModelAndView model) {
+	public ModelAndView addToCart(@RequestParam("productId")Long productId, ModelAndView model) {
 		Product product = productService.getProductById(productId);
 		cartItem = new CartItem(product);
 		shoppingCartService.addToCart(cartItem);
 		model.addObject("cart", shoppingCart);
-		model.setViewName("homepage");
+		model.setViewName("redirect:/");
 		return model;
 
 	}

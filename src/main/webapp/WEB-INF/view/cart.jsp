@@ -80,7 +80,7 @@
 							value="${_csrf.token}" /> <input
 							class="btn btn-success btn-block" type="submit" value="Update">
 						</td>
-						<td><a href="#" class="btn btn-success btn-block">Checkout
+						<td><a href="${pageContext.request.contextPath}/order/processOrder" class="btn btn-success btn-block">Checkout
 								<i class="fa fa-angle-right"></i>
 						</a></td>
 					</tr>

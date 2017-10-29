@@ -7,18 +7,28 @@ import com.gameshop.entity.Product;
 
 public class CartItem {
 
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
 	private long id;
 	private String productName;
+	private String category;
 	private int quantity;
-	private double unitPrice;
-	private double subtotalPrice;
+	private BigDecimal unitPrice;
+	private BigDecimal subtotalPrice;
 	private String pathToImage;
 
 	public CartItem(Product product) {
+		this.id = product.getProductId();
 		this.productName = product.getProductName();
-		this.id = product.getId();
+		this.category = product.getCategory();
 		this.quantity = 1;
-		this.unitPrice = product.getUnitPrice().doubleValue();
+		this.unitPrice = product.getUnitPrice();
 		this.subtotalPrice = calculateTotalPrice();
 		this.pathToImage = product.getPathToImage();
 	}
@@ -35,8 +45,8 @@ public class CartItem {
 		this.pathToImage = pathToImage;
 	}
 
-	private double calculateTotalPrice() {
-		return unitPrice * quantity;
+	private BigDecimal calculateTotalPrice() {
+		return unitPrice.multiply(BigDecimal.valueOf(quantity));
 	}
 
 	public String getProductName() {
@@ -55,19 +65,19 @@ public class CartItem {
 		this.quantity = quantity;
 	}
 
-	public double getUnitPrice() {
+	public BigDecimal getUnitPrice() {
 		return unitPrice;
 	}
 
-	public void setUnitPrice(double unitPrice) {
+	public void setUnitPrice(BigDecimal unitPrice) {
 		this.unitPrice = unitPrice;
 	}
 
-	public double getSubtotalPrice() {
-		return subtotalPrice * quantity;
+	public BigDecimal getSubtotalPrice() {
+		return subtotalPrice.multiply(BigDecimal.valueOf(quantity));
 	}
 
-	public void setSubtotalPrice(double subtotalPrice) {
+	public void setSubtotalPrice(BigDecimal subtotalPrice) {
 		this.subtotalPrice = subtotalPrice;
 	}
 

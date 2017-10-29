@@ -1,11 +1,13 @@
 package com.gameshop.service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 
 import com.gameshop.entity.Product;
@@ -19,34 +21,34 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 	@Autowired
 	private ShoppingCart shoppingCart;
 
-	private double totalPrice;
+	private BigDecimal totalPrice = BigDecimal.ZERO;
 
 	@Override
 	public void addToCart(CartItem cartItem) {
-		totalPrice = 0;
+		totalPrice = BigDecimal.ZERO;
 		if (!isAlreadyInCart(shoppingCart, cartItem)) {
 			shoppingCart.addProduct(cartItem);
-			for(CartItem item : shoppingCart.getCartItems()) {
-			totalPrice += item.getSubtotalPrice();
+			for (CartItem item : shoppingCart.getCartItems()) {
+				totalPrice = totalPrice.add(item.getSubtotalPrice());
 			}
 			shoppingCart.setTotalPrice(totalPrice);
 		}
 	}
-	
+
 	@Override
 	public void updateCartItem(String[] quantity) {
-		totalPrice = 0;
+		totalPrice = BigDecimal.ZERO;
 		List<CartItem> cartItems = shoppingCart.getCartItems();
-		for(int i = 0 ; i < cartItems.size() ; i ++) { 
+		for (int i = 0; i < cartItems.size(); i++) {
 			cartItems.get(i).setQuantity(Integer.parseInt(quantity[i]));
 		}
-		for(CartItem item : cartItems) {
-			
-			totalPrice += item.getSubtotalPrice();
-			
+		for (CartItem item : cartItems) {
+
+			totalPrice = totalPrice.add(item.getSubtotalPrice());
+
 		}
 		shoppingCart.setTotalPrice(totalPrice);
-		shoppingCart.setCartItems(cartItems);	
+		shoppingCart.setCartItems(cartItems);
 	}
 
 	@Override
@@ -59,7 +61,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 		}
 		return null;
 	}
-	
+
 	@Override
 	public CartItem findCartItemById(Long productId) {
 
@@ -82,9 +84,9 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
 	@Override
 	public void deleteItemFromCart(CartItem cartItem) {
-		totalPrice -= cartItem.getSubtotalPrice();
+		totalPrice = totalPrice.subtract(cartItem.getSubtotalPrice());
 		shoppingCart.deleteProduct(cartItem);
-		totalPrice = 0;
+		totalPrice = BigDecimal.ZERO;
 	}
 
 }
