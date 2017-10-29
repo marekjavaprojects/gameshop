@@ -1,8 +1,5 @@
 package com.gameshop.service;
 
-import org.springframework.stereotype.Component;
-
-import com.gameshop.entity.Product;
 import com.gameshop.model.CartItem;
 
 public interface ShoppingCartService {

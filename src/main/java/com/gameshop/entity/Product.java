@@ -14,19 +14,6 @@ import javax.validation.constraints.Digits;
 @Table(name = "product")
 public class Product {
 
-	public Product() {
-	}
-
-	public Product(String productName, String category, BigDecimal  unitPrice, int quantity,
-			String pathToImage, String dateAdded) {
-		this.productName = productName;
-		this.category = category;
-		this.unitPrice = unitPrice;
-		this.quantity = quantity;
-		this.pathToImage = pathToImage;
-		this.dateAdded = dateAdded;
-	}
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "productId")
@@ -51,6 +38,19 @@ public class Product {
 	@Column(name = "date_added")
 	private String dateAdded;
 
+	public Product() {
+	}
+
+	public Product(String productName, String category, BigDecimal unitPrice, int quantity, String pathToImage,
+			String dateAdded) {
+		this.productName = productName;
+		this.category = category;
+		this.unitPrice = unitPrice;
+		this.quantity = quantity;
+		this.pathToImage = pathToImage;
+		this.dateAdded = dateAdded;
+	}
+
 	public String getProductName() {
 		return productName;
 	}
@@ -67,11 +67,11 @@ public class Product {
 		this.category = category;
 	}
 
-	public BigDecimal  getUnitPrice() {
+	public BigDecimal getUnitPrice() {
 		return unitPrice;
 	}
 
-	public void setUnitPrice(BigDecimal  unitPrice) {
+	public void setUnitPrice(BigDecimal unitPrice) {
 		this.unitPrice = unitPrice;
 	}
 

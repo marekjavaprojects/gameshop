@@ -12,22 +12,20 @@ import org.springframework.context.annotation.ScopedProxyMode;
 
 @Component
 @Scope(proxyMode = ScopedProxyMode.TARGET_CLASS, value = "session")
-public class ShoppingCart implements Serializable{
-
+public class ShoppingCart implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
 	private List<CartItem> cartItems = new ArrayList<CartItem>();
 	private BigDecimal totalPrice = new BigDecimal(0);
 	private int numberOfItemsInCart;
 
-	public ShoppingCart() {
-
-	}
-
 	public ShoppingCart(BigDecimal totalPrice, int numberOfItemsInCart) {
 		this.totalPrice = totalPrice;
 		this.numberOfItemsInCart = numberOfItemsInCart;
+	}
+
+	public ShoppingCart() {
+
 	}
 
 	public List<CartItem> getCartItems() {
@@ -42,7 +40,7 @@ public class ShoppingCart implements Serializable{
 		return totalPrice;
 	}
 
-	public void setTotalPrice(BigDecimal totalPrice) {		
+	public void setTotalPrice(BigDecimal totalPrice) {
 		this.totalPrice = totalPrice;
 	}
 
@@ -53,14 +51,14 @@ public class ShoppingCart implements Serializable{
 	public void setNumberOfItemsInCart(int numberOfItemsInCart) {
 		this.numberOfItemsInCart = numberOfItemsInCart;
 	}
-	
+
 	public void addProduct(CartItem cartItem) {
-		
+
 		this.cartItems.add(cartItem);
 		this.totalPrice = totalPrice.add(cartItem.getSubtotalPrice());
 
 	}
-	
+
 	public void deleteProduct(CartItem cartItem) {
 		this.cartItems.remove(cartItem);
 		this.totalPrice = totalPrice.subtract(cartItem.getSubtotalPrice());

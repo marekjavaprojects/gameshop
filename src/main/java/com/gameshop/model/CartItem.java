@@ -1,19 +1,10 @@
 package com.gameshop.model;
 
 import java.math.BigDecimal;
-import java.math.MathContext;
 
 import com.gameshop.entity.Product;
 
 public class CartItem {
-
-	public String getCategory() {
-		return category;
-	}
-
-	public void setCategory(String category) {
-		this.category = category;
-	}
 
 	private long id;
 	private String productName;
@@ -31,6 +22,14 @@ public class CartItem {
 		this.unitPrice = product.getUnitPrice();
 		this.subtotalPrice = calculateTotalPrice();
 		this.pathToImage = product.getPathToImage();
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
 	}
 
 	public long getId() {
@@ -80,5 +79,4 @@ public class CartItem {
 	public void setSubtotalPrice(BigDecimal subtotalPrice) {
 		this.subtotalPrice = subtotalPrice;
 	}
-
 }
