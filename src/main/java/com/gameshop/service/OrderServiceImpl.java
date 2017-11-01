@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,17 +23,16 @@ import com.gameshop.repository.ProductRepository;
 public class OrderServiceImpl implements OrderService {
 
 	@Autowired
-	OrderRepository orderRepository;
+	private OrderRepository orderRepository;
 	@Autowired
-	ProductRepository productRepository;
+	private ProductRepository productRepository;
 	@Autowired
-	OrderDetailsRepository orderDetailsRepository;
-	Map<String, Integer> orders;
-	List<Product> notAvailableProducts;
+	private OrderDetailsRepository orderDetailsRepository;
 
 	@Override
+	@Transactional
 	public void processOrderIntoDatabase(ShoppingCart shoppingCart, User user) {
-		notAvailableProducts = checkIfProductsInCartAreAvailable(shoppingCart);
+		List<Product> notAvailableProducts = checkIfProductsInCartAreAvailable(shoppingCart);
 		if (notAvailableProducts.isEmpty()) {
 			Order order = new Order(shoppingCart.getTotalPrice(), user);
 			Product product;
@@ -50,12 +51,15 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
+	@Transactional
 	public Product transformCartItemIntoProduct(CartItem cartItem) {
 		Product product = productRepository.findProductByName(cartItem.getProductName());
 		return product;
 	}
 
-	private List<Product> checkIfProductsInCartAreAvailable(ShoppingCart cart) {
+	@Override
+	@Transactional
+	public List<Product> checkIfProductsInCartAreAvailable(ShoppingCart cart) {
 		List<Product> notAvailableProductsIds = new ArrayList<Product>();
 		for (CartItem item : cart.getCartItems()) {
 			Product product = productRepository.findProductByName(item.getProductName());
@@ -67,12 +71,10 @@ public class OrderServiceImpl implements OrderService {
 		return notAvailableProductsIds;
 	}
 	
+	@Transactional
 	private void updateProductsQuantityInDataBase(Product product, CartItem item) {
 		product.setQuantity(productRepository.getOne(product.getProductId()).getQuantity() - item.getQuantity());
 		productRepository.saveAndFlush(product);
 	}
 
-	public List<Product> getNotAvailableProducts() {
-		return notAvailableProducts;
-	}
 }

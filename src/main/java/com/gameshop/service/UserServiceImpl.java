@@ -16,9 +16,9 @@ import com.gameshop.repository.UserRepository;
 public class UserServiceImpl implements UserService {
 
 	@Autowired
-	UserRepository userRepository;
+	private UserRepository userRepository;
 	@Autowired
-	RoleRepository roleRepository;
+	private RoleRepository roleRepository;
 	@Autowired
 	private BCryptPasswordEncoder bcryptEncoder;
 
