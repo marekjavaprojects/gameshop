@@ -11,10 +11,10 @@ import com.gameshop.entity.Product;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
-	@Query("SELECT p FROM Product p ORDER BY dateAdded")
-	public List<Product> findFourLastProducts();
+	@Query("SELECT p FROM Product p WHERE p.quantity > 0 ORDER BY dateAdded ")
+	public List<Product> findLatestAvailableProducts();
 
-	@Query("SELECT p FROM Product p WHERE p.category= :category")
+	@Query("SELECT p FROM Product p WHERE p.category= :category AND p.quantity > 0")
 	public List<Product> findProductsByCategory(@Param("category") String category);
 
 	@Query("SELECT p FROM Product p WHERE p.productName LIKE :productName%")

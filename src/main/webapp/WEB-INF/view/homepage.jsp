@@ -104,7 +104,6 @@
 
 			<h3>${productListLabel}</h3>
 
-
 			<div class="col-md-9">
 
 				<div class="row">

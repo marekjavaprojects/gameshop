@@ -35,7 +35,6 @@
 					</tr>
 				</thead>
 				<c:forEach var="cartItem" items="${cart.cartItems}">
-
 					<tbody>
 						<tr>
 							<td data-th="Product">
@@ -52,13 +51,13 @@
 							</td>
 							<td data-th="Price">${cartItem.unitPrice}</td>
 							<td data-th="Quantity"><input type="number"
-								class="form-control text-center" name="quantity" value="${cartItem.quantity}" ></td>
+								class="form-control text-center" name="quantity"
+								value="${cartItem.quantity}"></td>
 							<td data-th="Subtotal" class="text-center">${cartItem.subtotalPrice}</td>
-							<td class="actions" data-th="">
-								<a href="${pageContext.request.contextPath}/cart/deleteItem/${cartItem.id}" class="btn btn-danger btn-sm">								
-									<i class="fa fa-trash-o"></i>
-								</a>
-							</td>
+							<td class="actions" data-th=""><a
+								href="${pageContext.request.contextPath}/cart/deleteItem/${cartItem.id}"
+								class="btn btn-danger btn-sm"> <i class="fa fa-trash-o"></i>
+							</a></td>
 						</tr>
 				</c:forEach>
 
@@ -80,13 +79,20 @@
 							value="${_csrf.token}" /> <input
 							class="btn btn-success btn-block" type="submit" value="Update">
 						</td>
-						<td><a href="${pageContext.request.contextPath}/order/processOrder" class="btn btn-success btn-block">Checkout
-								<i class="fa fa-angle-right"></i>
+						<td><a
+							href="${pageContext.request.contextPath}/order/processOrder"
+							class="btn btn-success btn-block">Checkout <i
+								class="fa fa-angle-right"></i>
 						</a></td>
 					</tr>
 				</tfoot>
 			</table>
 		</form>
+		<c:forEach var="product" items="${notAvailable}">
+
+			<p>${product.productName} is not available.We got ${product.quantity} in stock available</p>
+
+		</c:forEach>
 	</div>
 </body>
 </html>

@@ -1,5 +1,7 @@
 package com.gameshop.service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,27 +23,29 @@ public class OrderServiceImpl implements OrderService {
 	@Autowired
 	OrderRepository orderRepository;
 	@Autowired
-	ProductRepository productRepository;	
+	ProductRepository productRepository;
 	@Autowired
-	OrderDetailsRepository orderDetailsRepository;	
+	OrderDetailsRepository orderDetailsRepository;
 	Map<String, Integer> orders;
+	List<Product> notAvailableProducts;
 
 	@Override
 	public void processOrderIntoDatabase(ShoppingCart shoppingCart, User user) {
-		
-		Order order = new Order(shoppingCart.getTotalPrice(), user);
-		Product product;
-		System.out.println("order id: " + order.getId());
-		orderRepository.saveAndFlush(order);
-		OrderDetails orderDetails;
-		for(CartItem cartItem : shoppingCart.getCartItems()) {
-			orderDetails = new OrderDetails();
-			product = transformCartItemIntoProduct(cartItem);
-			orderDetails.setOrder(order);
-			orderDetails.setProduct(product);
-			orderDetails.setQuantity(cartItem.getQuantity());
-			System.out.println("order det id: " + orderDetails.getOrderDetailsId());
-			orderDetailsRepository.save(orderDetails);
+		notAvailableProducts = checkIfProductsInCartAreAvailable(shoppingCart);
+		if (notAvailableProducts.isEmpty()) {
+			Order order = new Order(shoppingCart.getTotalPrice(), user);
+			Product product;
+			orderRepository.saveAndFlush(order);
+			OrderDetails orderDetails;
+			for (CartItem cartItem : shoppingCart.getCartItems()) {
+				orderDetails = new OrderDetails();
+				product = transformCartItemIntoProduct(cartItem);
+				orderDetails.setOrder(order);
+				orderDetails.setProduct(product);
+				orderDetails.setQuantity(cartItem.getQuantity());
+				orderDetailsRepository.save(orderDetails);
+				updateProductsQuantityInDataBase(product, cartItem);
+			}
 		}
 	}
 
@@ -50,20 +54,25 @@ public class OrderServiceImpl implements OrderService {
 		Product product = productRepository.findProductByName(cartItem.getProductName());
 		return product;
 	}
-	
-	private boolean checkIfProductIsAvailable(Long id) {		
-		if(productRepository.findOne(id).getQuantity() > 0) {
-			return true;
+
+	private List<Product> checkIfProductsInCartAreAvailable(ShoppingCart cart) {
+		List<Product> notAvailableProductsIds = new ArrayList<Product>();
+		for (CartItem item : cart.getCartItems()) {
+			Product product = productRepository.findProductByName(item.getProductName());
+			if (item.getQuantity() > product.getQuantity()) {
+				notAvailableProductsIds.add(product);
+			}
 		}
-		
-		return false;		
+
+		return notAvailableProductsIds;
 	}
 	
-	private void updateProductQuantity(Long id) {
-		if(checkIfProductIsAvailable(id)) {
-			int quantity = productRepository.findOne(id).getQuantity();
-		} else {
-			
-		}
+	private void updateProductsQuantityInDataBase(Product product, CartItem item) {
+		product.setQuantity(productRepository.getOne(product.getProductId()).getQuantity() - item.getQuantity());
+		productRepository.saveAndFlush(product);
+	}
+
+	public List<Product> getNotAvailableProducts() {
+		return notAvailableProducts;
 	}
 }

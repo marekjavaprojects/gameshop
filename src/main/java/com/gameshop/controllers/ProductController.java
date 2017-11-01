@@ -25,8 +25,8 @@ public class ProductController {
 	
 	@GetMapping("/allProducts")
 	public String showAllProducts(Model model, Principal principal) {
-		List<Product> allProducts = productService.getProducts();
-		Set<String> categories = productService.fetchCategoriesFromProducts(productService.getProducts());
+		List<Product> allProducts = productService.getLatestAvailableProducts();
+		Set<String> categories = productService.fetchCategoriesFromProducts(productService.getLatestAvailableProducts());
 		productListLabel = "Browse ALL games in the shop!";
 		model.addAttribute("products", allProducts);
 		model.addAttribute("categories", categories);
@@ -38,8 +38,7 @@ public class ProductController {
 	@GetMapping("/{category}")
 	public String showProductsByCategory(@PathVariable("category") String category, Model model, Principal principal) {
 		List<Product> productsByCategory = productService.getProductsByCategory(category);		
-		Set<String> categories = productService.fetchCategoriesFromProducts(productService.getProducts());
-
+		Set<String> categories = productService.fetchCategoriesFromProducts(productService.getLatestAvailableProducts());
 		model.addAttribute("products", productsByCategory);
 		model.addAttribute("categories", categories);
 
@@ -48,19 +47,16 @@ public class ProductController {
 
 	@GetMapping("/search")
 	public String searchProductsByName(@RequestParam(value = "productName") String productName, Model model, Principal principal) {
-		Set<String> categories = productService.fetchCategoriesFromProducts(productService.getProducts());
+		Set<String> categories = productService.fetchCategoriesFromProducts(productService.getLatestAvailableProducts());
 		if (productName.trim().compareTo("") == 0) {
 			model.addAttribute("categories", categories);
-
+			
 			return "homepage";
-
 		}
 		List<Product> productsByName = productService.searchProductsByName(productName);
-
 		model.addAttribute("products", productsByName);
 		model.addAttribute("categories", categories);
 
 		return "homepage";
 	}
-
 }

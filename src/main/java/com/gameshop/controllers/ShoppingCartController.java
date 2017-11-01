@@ -45,7 +45,7 @@ public class ShoppingCartController {
 	@RequestMapping(value = "/updateCart", method=RequestMethod.POST)
 	public ModelAndView updateCart(HttpServletRequest request, HttpSession session, ModelAndView model) {
 		shoppingCartService.updateCartItem(request.getParameterValues("quantity"));
-		model.setViewName("cart");
+		model.setViewName("redirect:/cart/showCart");
 		
 		return model;
 	}
