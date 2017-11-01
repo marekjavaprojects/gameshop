@@ -15,7 +15,7 @@ import com.gameshop.repository.ProductRepository;
 public class ProductServiceImpl implements ProductService {
 
 	@Autowired
-	ProductRepository productRepository;
+	private ProductRepository productRepository;
 
 	@Override
 	@Transactional

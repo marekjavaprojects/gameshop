@@ -54,7 +54,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 				return item;
 			}
 		}
-		//todo: refactor return null
+
 		return null;
 	}
 
