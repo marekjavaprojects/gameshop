@@ -1,5 +1,6 @@
 package com.gameshop.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -26,15 +27,17 @@ public class HomePageController {
 	
 	@GetMapping("/")
 	public String showHomePageWithFourLatestProducts(HttpServletRequest request, Model model) {		
-		List<Product> latestFourProducts = productService.getFourLatestProducts();
+		List<Product> latestProducts = productService.getLatestAvailableProducts();
 		Set<String> categories = productService.fetchCategoriesFromProducts(productService.getProducts());
 		productListLabel = "Latest Games!";
 		HttpSession session = request.getSession();		
 		session.setAttribute("cart", shoppingCart);
-		model.addAttribute("products", latestFourProducts);
+		model.addAttribute("products", latestProducts);
 		model.addAttribute("categories", categories);
 		model.addAttribute("productListLabel", productListLabel);
 		
 		return "homepage";
-	}	
+	}
+	
+	
 }
