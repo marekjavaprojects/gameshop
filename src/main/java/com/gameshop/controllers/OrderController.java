@@ -17,24 +17,24 @@ import com.gameshop.service.UserService;
 @Controller
 @RequestMapping("/order")
 public class OrderController {
-	
+
 	@Autowired
-	ShoppingCart shoppingCart;	
+	ShoppingCart shoppingCart;
 	@Autowired
-	OrderService orderService;	
+	OrderService orderService;
 	@Autowired
-	UserService userService;	
-	
+	UserService userService;
+
 	@GetMapping("/processOrder")
-	public ModelAndView processOrder(ModelAndView model) {		
-		orderService.processOrderIntoDatabase(shoppingCart, userService.findByUsername(SecurityContextHolder.getContext()
-				.getAuthentication().getName()));
-		List<Product> notAvailableProducts = orderService.getNotAvailableProducts();
-		if(!notAvailableProducts.isEmpty()) {
+	public ModelAndView processOrder(ModelAndView model) {
+		List<Product> notAvailableProducts = orderService.checkIfProductsInCartAreAvailable(shoppingCart);
+		orderService.processOrderIntoDatabase(shoppingCart,
+				userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()));
+		if (!notAvailableProducts.isEmpty()) {
 			model.addObject("notAvailable", notAvailableProducts);
 		}
 		model.setViewName("cart");
-		
-		return model;		
-	}	
+
+		return model;
+	}
 }

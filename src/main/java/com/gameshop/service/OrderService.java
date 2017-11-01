@@ -10,8 +10,8 @@ import com.gameshop.model.ShoppingCart;
 public interface OrderService {
 
 	public Product transformCartItemIntoProduct(CartItem cartItem);
-
-	public List<Product> getNotAvailableProducts();
+	
+	public List<Product> checkIfProductsInCartAreAvailable(ShoppingCart shoppingCart);
 
 	public void processOrderIntoDatabase(ShoppingCart shoppingCart, User user);
 }
