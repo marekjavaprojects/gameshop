@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,12 +18,26 @@ public class ProductServiceImpl implements ProductService {
 
 	@Autowired
 	private ProductRepository productRepository;
+	
+	@Override
+	@Transactional
+	public List<Product> getLatestAvailableProducts() {
+		
+		return productRepository.findLatestAvailableProducts();				
+	}
 
 	@Override
 	@Transactional
-	public List<Product> getProducts() {
+	public List<Product> showHomePageProducts(Pageable pageable) {
 
-		return productRepository.findAll();
+		return productRepository.showHomePageProducts(pageable);
+	}
+
+	@Override
+	@Transactional
+	public Page<Product> getProducts(Pageable pageable) {
+
+		return productRepository.findAllProducts(pageable);
 	}
 
 	@Override
@@ -33,15 +49,15 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	@Transactional
-	public List<Product> getLatestAvailableProducts() {
+	public Page<Product> getLatestAvailableProducts(Pageable pageable) {
 
-		return productRepository.findLatestAvailableProducts();
+		return productRepository.findLatestAvailableProducts(pageable);
 	}
 
 	@Override
 	@Transactional
-	public List<Product> getProductsByCategory(String category) {
-		return productRepository.findProductsByCategory(category);
+	public Page<Product> getProductsByCategory(String category, Pageable pageable) {
+		return productRepository.findProductsByCategory(category, pageable);
 	}
 
 	@Override
@@ -50,11 +66,12 @@ public class ProductServiceImpl implements ProductService {
 
 		return productRepository.findProductByName(productName);
 	}
+
 	@Override
 	@Transactional
-	public List<Product> searchProductsByName(String productName) {
+	public Page<Product> searchProductsByName(String productName, Pageable pageable) {
 
-		return productRepository.searchProductsByName(productName);
+		return productRepository.searchProductsByName(productName, pageable);
 	}
 
 	public boolean isProductAvailable(Long id) {
@@ -62,13 +79,15 @@ public class ProductServiceImpl implements ProductService {
 		return productRepository.findOne(id).getQuantity() > 0;
 	}
 
-	public Set<String> fetchCategoriesFromProducts(List<Product> products) {
-
+	@Override
+	@Transactional
+	public Set<String> getProductCategories() {
 		Set<String> categories = new HashSet<>();
-		for (Product product : products) {
-			categories.add(product.getCategory());
+		List<Product> products = productRepository.findLatestAvailableProducts();
+		for(Product p : products) {
+			categories.add(p.getCategory());
 		}
 
 		return categories;
-	}	
+	}
 }

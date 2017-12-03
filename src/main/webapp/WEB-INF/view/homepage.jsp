@@ -84,13 +84,12 @@
 	</div>
 	</nav>
 	<div class="container">
-
 		<div class="row">
 
 			<div class="col-md-3">
 				<div class="list-group">
 
-					<a href="${pageContext.request.contextPath}/products/allProducts"
+					<a href="${pageContext.request.contextPath}/products/allProducts/1"
 						class="list-group-item">SHOW ALL</a>
 
 					<c:forEach var="category" items="${categories}">
@@ -105,7 +104,22 @@
 			<h3>${productListLabel}</h3>
 
 			<div class="col-md-9">
+				<c:if test="${pages gt 0}">
+					<ul class="pagination">
+						<li class="disabled"><a
+							href=<c:url value="/products/allProducts/${prevPage}"></c:url>>«</a></li>
+						<c:forEach begin="1" end="${pages }" varStatus="loop">
 
+							<li class="active"><a
+								href=<c:url value="/products/allProducts/${loop.index}"></c:url>>${loop.index}
+									<span class="sr-only">(current)</span>
+							</a></li>
+
+						</c:forEach>
+						<li><a
+							href=<c:url value="/products/allProducts/${nextPage}"></c:url>>»</a></li>
+					</ul>
+				</c:if>
 				<div class="row">
 					<c:forEach var="product" varStatus="status" items="${products}">
 						<div class="col-sm-4 col-lg-4 col-md-4">
@@ -129,8 +143,9 @@
 											<div class="form-group">
 												<input type="hidden" name="${_csrf.parameterName}"
 													value="${_csrf.token}" />
-												<button type="submit" class="btn btn-primary" name="productId"
-													value="${product.productId}">Add to cart</button>
+												<button type="submit" class="btn btn-primary"
+													name="productId" value="${product.productId}">Add
+													to cart</button>
 											</div>
 										</form>
 
@@ -145,6 +160,8 @@
 				</div>
 
 			</div>
+
+
 		</div>
 
 	</div>
