@@ -4,13 +4,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.*;
 
 import java.math.BigDecimal;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.transaction.Transactional;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,13 +20,8 @@ import org.springframework.test.context.transaction.TransactionalTestExecutionLi
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import com.gameshop.entity.Order;
-import com.gameshop.entity.OrderDetails;
-import com.gameshop.entity.Product;
-import com.gameshop.entity.Role;
 import com.gameshop.entity.User;
-import com.gameshop.repository.OrderDetailsRepository;
 import com.gameshop.repository.OrderRepository;
-import com.gameshop.repository.ProductRepository;
 import com.gameshop.repository.UserRepository;
 import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
