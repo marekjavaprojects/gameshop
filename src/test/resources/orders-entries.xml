@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<orders order_id="1" total_price="239.98" user_id="1" />
+	<orders order_id="2" total_price="119.99" user_id="1" />
+	<orders order_id="3" total_price="119.99" user_id="1" />
+
+</dataset>

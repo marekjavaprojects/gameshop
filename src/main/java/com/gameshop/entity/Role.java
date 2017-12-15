@@ -2,6 +2,7 @@ package com.gameshop.entity;
 
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,11 +15,19 @@ import javax.persistence.Table;
 public class Role {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "role_id")
 	private Long roleId;
+	
 	@ManyToMany(mappedBy = "roles")
 	private Set<User> users;
+	
+	@Column(name = "role_name")
 	private String name;
+
+	public Role(String name) {
+		this.name = name;
+	}
 
 	public Role() {
 

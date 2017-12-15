@@ -30,7 +30,7 @@ public class ProductController {
 		List<Product> allProducts = productService.getLatestAvailableProducts();
 		int prevPage = page - 1;
 		int nextPage = page + 1;
-		int numberOfPages = (allProducts.size() / 5);
+		int numberOfPages = (allProducts.size() / 5) + 1;
 		
 		Pageable pageable = new PageRequest(page - 1, 5);
 		List<Product> allProductsByPage = productService.getLatestAvailableProducts(pageable).getContent();
