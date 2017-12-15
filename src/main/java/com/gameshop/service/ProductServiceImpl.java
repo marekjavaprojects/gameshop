@@ -23,14 +23,7 @@ public class ProductServiceImpl implements ProductService {
 	@Transactional
 	public List<Product> getLatestAvailableProducts() {
 		
-		return productRepository.findLatestAvailableProducts();				
-	}
-
-	@Override
-	@Transactional
-	public List<Product> showHomePageProducts(Pageable pageable) {
-
-		return productRepository.showHomePageProducts(pageable);
+		return productRepository.findLatestProducts();				
 	}
 
 	@Override
@@ -71,7 +64,7 @@ public class ProductServiceImpl implements ProductService {
 	@Transactional
 	public Page<Product> searchProductsByName(String productName, Pageable pageable) {
 
-		return productRepository.searchProductsByName(productName, pageable);
+		return productRepository.findProductsByName(productName, pageable);
 	}
 
 	public boolean isProductAvailable(Long id) {
@@ -83,7 +76,7 @@ public class ProductServiceImpl implements ProductService {
 	@Transactional
 	public Set<String> getProductCategories() {
 		Set<String> categories = new HashSet<>();
-		List<Product> products = productRepository.findLatestAvailableProducts();
+		List<Product> products = productRepository.findLatestProducts();
 		for(Product p : products) {
 			categories.add(p.getCategory());
 		}

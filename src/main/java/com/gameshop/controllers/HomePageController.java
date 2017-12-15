@@ -31,7 +31,7 @@ public class HomePageController {
 	@GetMapping("/")
 	public String showHomePageWithFourLatestProducts(HttpServletRequest request, Model model, @RequestParam(name = "page", defaultValue = "0", required = false) Integer page) {
 		Pageable pageable = new PageRequest(page, 5);
-		List<Product> latestProducts = productService.showHomePageProducts(pageable);
+		List<Product> latestProducts = productService.getLatestAvailableProducts(pageable).getContent();
 		Set<String> categories = productService.getProductCategories();
 		productListLabel = "Latest Games!";
 		HttpSession session = request.getSession();

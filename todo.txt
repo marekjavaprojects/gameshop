@@ -1,0 +1,3 @@
+-checking if user already exists in db(can't duplicate email address)
+-pagination
+-mail sender (confirm user registration process)

@@ -25,7 +25,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 public class User {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "user_id")
 	private Long userId;
 
@@ -54,6 +54,13 @@ public class User {
 		this.passwordConfirm = passwordConfirm;
 		this.email = email;
 		this.roles = roles;
+	}
+	
+	public User(String username, String password, String passwordConfirm, String email) {
+		this.username = username;
+		this.password = password;
+		this.passwordConfirm = passwordConfirm;
+		this.email = email;
 	}
 
 	public User() {

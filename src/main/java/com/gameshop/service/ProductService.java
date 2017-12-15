@@ -10,9 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import com.gameshop.entity.Product;
 
 public interface ProductService {
-	
-	public List<Product> showHomePageProducts(Pageable pageable);
-	
+		
 	public List<Product> getLatestAvailableProducts();
 	
 	public Page<Product> getProducts(Pageable pageable);
