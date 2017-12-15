@@ -121,7 +121,7 @@ public class ProductRepositoryTest {
 	}
 
 	@Test
-	public void deleteProductShouldReturnSevenProducts() {
+	public void repositoryShouldReturnSevenProductsAfterDeleteProduct() {
 		Long productId = 1L;
 		List<Product> products = productRepository.findAll();
 

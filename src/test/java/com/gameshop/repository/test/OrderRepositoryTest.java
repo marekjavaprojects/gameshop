@@ -78,7 +78,6 @@ public class OrderRepositoryTest {
 		Order order = orderRepository.findOne(1l);
 		orderRepository.delete(order);
 		List<Order> orders = orderRepository.findAll();
-		System.out.println("sadas" + orders.size());
 		
 		assertNotNull(user);
 		assertNotNull(order);
