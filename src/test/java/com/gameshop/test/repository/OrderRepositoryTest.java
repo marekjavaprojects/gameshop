@@ -1,4 +1,4 @@
-package com.gameshop.repository.test;
+package com.gameshop.test.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.*;

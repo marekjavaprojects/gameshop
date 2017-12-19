@@ -1,4 +1,4 @@
-package com.gameshop.repository.test;
+package com.gameshop.test.repository;
 
 import com.gameshop.entity.Product;
 import com.gameshop.repository.ProductRepository;

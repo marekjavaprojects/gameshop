@@ -6,6 +6,7 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,19 +19,19 @@ public class ProductServiceImpl implements ProductService {
 
 	@Autowired
 	private ProductRepository productRepository;
-	
+
 	@Override
 	@Transactional
-	public List<Product> getLatestAvailableProducts() {
-		
-		return productRepository.findLatestProducts();				
+	public Page<Product> getLatestAddedProducts(Pageable pageable) {
+
+		return productRepository.findLatestProducts(pageable);
 	}
 
 	@Override
 	@Transactional
 	public Page<Product> getProducts(Pageable pageable) {
 
-		return productRepository.findAllProducts(pageable);
+		return productRepository.findAll(pageable);
 	}
 
 	@Override
@@ -55,29 +56,24 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	@Transactional
-	public Product findProductByName(String productName) {
+	public Product getProductByName(String productName) {
 
 		return productRepository.findProductByName(productName);
 	}
 
 	@Override
 	@Transactional
-	public Page<Product> searchProductsByName(String productName, Pageable pageable) {
+	public Page<Product> getProductsByName(String productName, Pageable pageable) {
 
 		return productRepository.findProductsByName(productName, pageable);
-	}
-
-	public boolean isProductAvailable(Long id) {
-
-		return productRepository.findOne(id).getQuantity() > 0;
 	}
 
 	@Override
 	@Transactional
 	public Set<String> getProductCategories() {
 		Set<String> categories = new HashSet<>();
-		List<Product> products = productRepository.findLatestProducts();
-		for(Product p : products) {
+		List<Product> products = productRepository.findAll();
+		for (Product p : products) {
 			categories.add(p.getCategory());
 		}
 

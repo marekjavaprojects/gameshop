@@ -11,9 +11,9 @@ import com.gameshop.entity.Product;
 
 public interface ProductService {
 		
-	public List<Product> getLatestAvailableProducts();
-	
 	public Page<Product> getProducts(Pageable pageable);
+	
+	public Page<Product> getLatestAddedProducts(Pageable pageable);
 
 	public Page<Product> getLatestAvailableProducts(Pageable pageable);
 
@@ -23,8 +23,8 @@ public interface ProductService {
 
 	public Page<Product> getProductsByCategory(String category, Pageable pageable);
 
-	public Page<Product> searchProductsByName(String productName, Pageable pageable);
+	public Page<Product> getProductsByName(String productName, Pageable pageable);
 
-	public Product findProductByName(String productName);
+	public Product getProductByName(String productName);
 
 }

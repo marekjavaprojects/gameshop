@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	@Transactional
-	public User getUser(Long userId) {
+	public User getUserById(Long userId) {
 		return userRepository.findOne(userId);
 	}
 
@@ -49,7 +49,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User findByUsername(String username) {
+	public User getUserByUsername(String username) {
 		return userRepository.findByUsername(username);
 	}
 

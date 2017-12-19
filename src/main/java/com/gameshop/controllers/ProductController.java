@@ -27,12 +27,12 @@ public class ProductController {
 
 	@GetMapping("/allProducts/{page}")
 	public String showAllProducts(Model model, Principal principal, @PathVariable(name = "page") Integer page) {
-		List<Product> allProducts = productService.getLatestAvailableProducts();
+		Pageable pageable = new PageRequest(page - 1, 5);
 		int prevPage = page - 1;
 		int nextPage = page + 1;
+		List<Product> allProducts = productService.getLatestAvailableProducts(new PageRequest(0, Integer.MAX_VALUE)).getContent();
 		int numberOfPages = (allProducts.size() / 5) + 1;
-		
-		Pageable pageable = new PageRequest(page - 1, 5);
+
 		List<Product> allProductsByPage = productService.getLatestAvailableProducts(pageable).getContent();
 		Set<String> categories = productService.getProductCategories();
 		productListLabel = "Browse ALL games in the shop!";
@@ -82,7 +82,7 @@ public class ProductController {
 			return "homepage";
 		}
 
-		List<Product> productsByName = productService.searchProductsByName(productName, pageable).getContent();
+		List<Product> productsByName = productService.getProductsByName(productName, pageable).getContent();
 		model.addAttribute("products", productsByName);
 		model.addAttribute("categories", categories);
 

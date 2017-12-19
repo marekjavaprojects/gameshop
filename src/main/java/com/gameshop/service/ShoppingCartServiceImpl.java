@@ -16,7 +16,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
 	@Autowired
 	private ShoppingCart shoppingCart;
-	private BigDecimal totalPrice = BigDecimal.ZERO;
+	public BigDecimal totalPrice = BigDecimal.ZERO;
 
 	@Override
 	public void addToCart(CartItem cartItem) {
@@ -38,17 +38,14 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 			cartItems.get(i).setQuantity(Integer.parseInt(quantity[i]));
 		}
 		for (CartItem item : cartItems) {
-
 			totalPrice = totalPrice.add(item.getSubtotalPrice());
-
-		}
+		}		
 		shoppingCart.setTotalPrice(totalPrice);
 		shoppingCart.setCartItems(cartItems);
 	}
 
 	@Override
 	public CartItem findCartItemByName(String productName) {
-
 		for (CartItem item : shoppingCart.getCartItems()) {
 			if (item.getProductName().equals(productName)) {
 				return item;
@@ -60,17 +57,16 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
 	@Override
 	public CartItem findCartItemById(Long productId) {
-
 		for (CartItem item : shoppingCart.getCartItems()) {
 			if (item.getId() == productId) {
 				return item;
 			}
 		}
-		//todo: refactor return null
+		// todo: refactor return null
 		return null;
 	}
 
-	public boolean isAlreadyInCart(ShoppingCart shoppingCart, CartItem cartItem) {
+	private boolean isAlreadyInCart(ShoppingCart shoppingCart, CartItem cartItem) {
 		for (CartItem item : shoppingCart.getCartItems()) {
 			if (item.getProductName().equals(cartItem.getProductName())) {
 				return true;
@@ -83,7 +79,10 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 	public void deleteItemFromCart(CartItem cartItem) {
 		totalPrice = totalPrice.subtract(cartItem.getSubtotalPrice());
 		shoppingCart.deleteProduct(cartItem);
-		totalPrice = BigDecimal.ZERO;
+	}
+
+	public BigDecimal getTotalPrice() {
+		return totalPrice;
 	}
 
 }

@@ -15,10 +15,7 @@ import com.gameshop.entity.Product;
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
 	@Query("SELECT p FROM Product p ORDER BY p.dateAdded DESC")
-	public List<Product> findLatestProducts();
-
-	@Query("SELECT p FROM Product p ")
-	public Page<Product> findAllProducts(Pageable pageable);
+	public Page<Product> findLatestProducts(Pageable pageable);
 
 	@Query("SELECT p FROM Product p WHERE p.quantity > 0 ORDER BY dateAdded ASC")
 	public Page<Product> findLatestAvailableProducts(Pageable pageable);
