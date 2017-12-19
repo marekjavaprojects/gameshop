@@ -29,7 +29,7 @@ public class OrderController {
 	public ModelAndView processOrder(ModelAndView model) {
 		List<Product> notAvailableProducts = orderService.checkIfProductsInCartAreAvailable(shoppingCart);
 		orderService.processOrderIntoDatabase(shoppingCart,
-				userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()));
+				userService.getUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName()));
 		if (!notAvailableProducts.isEmpty()) {
 			model.addObject("notAvailable", notAvailableProducts);
 		}

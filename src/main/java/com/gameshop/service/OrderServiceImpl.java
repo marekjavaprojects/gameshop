@@ -28,23 +28,21 @@ public class OrderServiceImpl implements OrderService {
 	private ProductRepository productRepository;
 	@Autowired
 	private OrderDetailsRepository orderDetailsRepository;
-
+	
+	private Product product;
+	private OrderDetails orderDetails;
+	
 	@Override
 	@Transactional
 	public void processOrderIntoDatabase(ShoppingCart shoppingCart, User user) {
 		if (checkIfProductsInCartAreAvailable(shoppingCart).isEmpty()) {
 			Order order = new Order(shoppingCart.getTotalPrice(), user);
-			Product product;
 			orderRepository.saveAndFlush(order);
-			OrderDetails orderDetails;
 			for (CartItem cartItem : shoppingCart.getCartItems()) {
-				orderDetails = new OrderDetails();
 				product = transformCartItemIntoProduct(cartItem);
-				orderDetails.setOrder(order);
-				orderDetails.setProduct(product);
-				orderDetails.setQuantity(cartItem.getQuantity());
+				orderDetails = new OrderDetails(product, order, cartItem.getQuantity());
 				orderDetailsRepository.save(orderDetails);
-				updateProductsQuantityInDataBase(product, cartItem);
+				updateProductsQuantityInDatabase(product, cartItem);
 			}
 		}
 	}
@@ -71,7 +69,7 @@ public class OrderServiceImpl implements OrderService {
 	}
 	
 	@Transactional
-	private void updateProductsQuantityInDataBase(Product product, CartItem item) {
+	private void updateProductsQuantityInDatabase(Product product, CartItem item) {
 		product.setQuantity(productRepository.getOne(product.getProductId()).getQuantity() - item.getQuantity());
 		productRepository.saveAndFlush(product);
 	}

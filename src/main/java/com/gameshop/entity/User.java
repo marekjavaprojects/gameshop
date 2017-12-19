@@ -70,6 +70,10 @@ public class User {
 	public Long getId() {
 		return userId;
 	}
+	
+	public void setId(Long userId) {
+		this.userId = userId;
+	}
 
 	public String getUsername() {
 		return username;

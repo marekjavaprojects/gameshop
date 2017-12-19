@@ -1,4 +1,4 @@
-package com.gameshop.controllers.test;
+package com.gameshop.test.controllers;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
